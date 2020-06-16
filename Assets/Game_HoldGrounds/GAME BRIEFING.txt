@@ -1,0 +1,72 @@
+=======================================================
+===== HOLD GROUNDS - MULTI-PLATFORM GAME =====
+=======================================================
+
+Assets used:
+- https://assetstore.unity.com/lists/game-hold-grounds-168508
+- https://github.com/UnityTechnologies/UnityTowerDefense_Assets
+
+Github
+- 
+
+===== BRIEFING =====
+
+A small (but full) game where you need to destroy the enemy base in different levels.
+Assets are created to make it easy for anyone that wants to create more levels.
+I am using the latest Unity features and plan to keep it up-to-date.
+This project can be used for learning and Alexandre K will create talks around it.
+
+Features
+- MonoBehaviour game objects
+- Animation
+- Animator
+- Bake Lightning
+- Input System
+- Post Processing
+- Shader Graph
+- URP
+
+Plus:
+- Original Assets from Unity
+- Terrain Tools
+- Scriptable Objects
+- Text files and PlayerPref to save and load the game
+- Public available
+- Game will be optimized
+- Anyone can come in and create new levels
+
+===== THE GAME =====
+Tower Defense (kinda) with base building.
+
+Main goal:
+- Destroy the enemy base to win the level.
+- Score and upgrades are saved.
+
+Gameplay:
+- Your flag defines the radius where you can build.
+- Build farms to collect gold. Farms near trees generates more gold.
+- Build Barracks to create warrior units.
+- Build Magic Towers to create wizards, it also fires a magic ball to close enemies.
+- Build tower defenses to protect from attacks. You can also create archers from that.
+- Each unit has 2 modes: attack or defend.
+    - They will attack nearest enemy always.
+    - They will defend the nearest ally building while returning to the flag.
+- Each unit lost makes you lose Morale. If you lose all morale, you lose the level.
+- Use your units to attack enemy outposts. Cleared outposts enables you new flags (more area to build).
+- Destroy their base to win the level.
+- Each completed level, gives you Gold to upgrade units.
+- Upgrades are saved per game, so you can use those in any level.
+- The game will keep track of wins, loses and score.
+
+===== UPDATES =====
+
+- Always keep up-to-date with latest Unity version (LTS preferable).
+- Maybe add VR support.
+- Add mobile support.
+- Add console support.
+
+=======================================================
+Author: Alexandre Kikuchi
+alexandrek@unity3d.com
+Tech Evangelist
+=======================================================
