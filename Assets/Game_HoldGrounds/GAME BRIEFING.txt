@@ -18,10 +18,10 @@ This project can be used for learning and Alexandre K will create talks around i
 
 Features
 - MonoBehaviour game objects
-- Animation
-- Animator
+- Animation (and Animation Events)
+- Animator (and Animator Override)
 - Bake Lightning
-- Input System
+- Old Input
 - Post Processing
 - Shader Graph
 - URP
@@ -31,7 +31,7 @@ Plus:
 - Terrain Tools
 - Scriptable Objects
 - Text files and PlayerPref to save and load the game
-- Public available
+- Project can be available for free
 - Game will be optimized
 - Anyone can come in and create new levels
 

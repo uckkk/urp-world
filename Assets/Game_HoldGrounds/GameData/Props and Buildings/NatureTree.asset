@@ -17,5 +17,5 @@ MonoBehaviour:
   objectType: 4
   goldCost: 0
   maxHealthPoints: 100
-  goldGenerate: 5
-  timerForGoldIncome: 5
+  goldGenerate: 0
+  timerForGoldIncome: 0

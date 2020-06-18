@@ -15,7 +15,8 @@ MonoBehaviour:
   propName: Magic Tower
   picture: {fileID: 21300000, guid: d9d3ec1c83dd4be49840228d9baa2f80, type: 3}
   objectType: 3
-  goldCost: 200
+  goldCost: 100
   maxHealthPoints: 100
-  goldGenerate: 5
-  timerForGoldIncome: 5
+  goldGenerate: 0
+  timerForGoldIncome: 0
+  unitDataType: {fileID: 11400000, guid: ad2244f182cb29346a58550c6c6fe2b1, type: 2}

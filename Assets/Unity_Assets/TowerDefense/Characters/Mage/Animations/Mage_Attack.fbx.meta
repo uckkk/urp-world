@@ -1,172 +1,494 @@
 fileFormatVersion: 2
 guid: ed975bcdf6dc9df488ada744ecc82be0
 ModelImporter:
-  serializedVersion: 23
-  fileIDToRecycleName:
-    100000: back_jnt
-    100002: backEnd_jnt
-    100004: Chest
-    100006: front_jnt
-    100008: frontEnd_jnt
-    100010: Head
-    100012: Hips
-    100014: Jaw
-    100016: JawTop
-    100018: left_jnt
-    100020: leftEnd_jnt
-    100022: LeftEye
-    100024: LeftFoot
-    100026: LeftHand
-    100028: LeftIndexDistal
-    100030: LeftIndexIntermediate
-    100032: LeftIndexProximal
-    100034: LeftLittleDistal
-    100036: LeftLittleIntermediate
-    100038: LeftLittleProximal
-    100040: LeftLowerArm
-    100042: LeftLowerLeg
-    100044: leftLowHand_jnt
-    100046: leftLowHandEnd_jnt
-    100048: LeftMiddleDistal
-    100050: LeftMiddleIntermediate
-    100052: LeftMiddleProximal
-    100054: LeftRingDistal
-    100056: LeftRingIntermediate
-    100058: LeftRingProximal
-    100060: LeftShoulder
-    100062: LeftThumbDistal
-    100064: LeftThumbIntermediate
-    100066: LeftThumbProximal
-    100068: LeftToes
-    100070: LeftUpperArm
-    100072: LeftUpperLeg
-    100074: //RootNode
-    100076: Mage_rig:Mage_Rig
-    100078: Mage_rig:Mage_Rig_MAIN_Ctrl
-    100080: Mage_rig:Mage_Rig_MAIN_Ctrl_RestPoseGrp
-    100082: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl
-    100084: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl_RestPoseGrp
-    100086: Neck
-    100088: R_handSpell_Rig
-    100090: R_prop_jnt
-    100092: right_jnt
-    100094: rightEnd_jnt
-    100096: RightEye
-    100098: RightFoot
-    100100: RightHand
-    100102: RightIndexDistal
-    100104: RightIndexIntermediate
-    100106: RightIndexProximal
-    100108: RightLittleDistal
-    100110: RightLittleIntermediate
-    100112: RightLittleProximal
-    100114: RightLowerArm
-    100116: RightLowerLeg
-    100118: rightLowHand_jnt
-    100120: rightLowHandEnd_jnt
-    100122: RightMiddleDistal
-    100124: RightMiddleIntermediate
-    100126: RightMiddleProximal
-    100128: RightRingDistal
-    100130: RightRingIntermediate
-    100132: RightRingProximal
-    100134: RightShoulder
-    100136: RightThumbDistal
-    100138: RightThumbIntermediate
-    100140: RightThumbProximal
-    100142: RightToes
-    100144: RightUpperArm
-    100146: RightUpperLeg
-    100148: Spine
-    100150: unityHumanoidJoint_grp
-    100152: UpperChest
-    100154: Weapon_jnt
-    100156: Weapon_Rig
-    400000: back_jnt
-    400002: backEnd_jnt
-    400004: Chest
-    400006: front_jnt
-    400008: frontEnd_jnt
-    400010: Head
-    400012: Hips
-    400014: Jaw
-    400016: JawTop
-    400018: left_jnt
-    400020: leftEnd_jnt
-    400022: LeftEye
-    400024: LeftFoot
-    400026: LeftHand
-    400028: LeftIndexDistal
-    400030: LeftIndexIntermediate
-    400032: LeftIndexProximal
-    400034: LeftLittleDistal
-    400036: LeftLittleIntermediate
-    400038: LeftLittleProximal
-    400040: LeftLowerArm
-    400042: LeftLowerLeg
-    400044: leftLowHand_jnt
-    400046: leftLowHandEnd_jnt
-    400048: LeftMiddleDistal
-    400050: LeftMiddleIntermediate
-    400052: LeftMiddleProximal
-    400054: LeftRingDistal
-    400056: LeftRingIntermediate
-    400058: LeftRingProximal
-    400060: LeftShoulder
-    400062: LeftThumbDistal
-    400064: LeftThumbIntermediate
-    400066: LeftThumbProximal
-    400068: LeftToes
-    400070: LeftUpperArm
-    400072: LeftUpperLeg
-    400074: //RootNode
-    400076: Mage_rig:Mage_Rig
-    400078: Mage_rig:Mage_Rig_MAIN_Ctrl
-    400080: Mage_rig:Mage_Rig_MAIN_Ctrl_RestPoseGrp
-    400082: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl
-    400084: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl_RestPoseGrp
-    400086: Neck
-    400088: R_handSpell_Rig
-    400090: R_prop_jnt
-    400092: right_jnt
-    400094: rightEnd_jnt
-    400096: RightEye
-    400098: RightFoot
-    400100: RightHand
-    400102: RightIndexDistal
-    400104: RightIndexIntermediate
-    400106: RightIndexProximal
-    400108: RightLittleDistal
-    400110: RightLittleIntermediate
-    400112: RightLittleProximal
-    400114: RightLowerArm
-    400116: RightLowerLeg
-    400118: rightLowHand_jnt
-    400120: rightLowHandEnd_jnt
-    400122: RightMiddleDistal
-    400124: RightMiddleIntermediate
-    400126: RightMiddleProximal
-    400128: RightRingDistal
-    400130: RightRingIntermediate
-    400132: RightRingProximal
-    400134: RightShoulder
-    400136: RightThumbDistal
-    400138: RightThumbIntermediate
-    400140: RightThumbProximal
-    400142: RightToes
-    400144: RightUpperArm
-    400146: RightUpperLeg
-    400148: Spine
-    400150: unityHumanoidJoint_grp
-    400152: UpperChest
-    400154: Weapon_jnt
-    400156: Weapon_Rig
-    7400000: Mage_Attack_v02
-    9500000: //RootNode
-    2186277476908879412: ImportLogs
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: back_jnt
+  - first:
+      1: 100002
+    second: backEnd_jnt
+  - first:
+      1: 100004
+    second: Chest
+  - first:
+      1: 100006
+    second: front_jnt
+  - first:
+      1: 100008
+    second: frontEnd_jnt
+  - first:
+      1: 100010
+    second: Head
+  - first:
+      1: 100012
+    second: Hips
+  - first:
+      1: 100014
+    second: Jaw
+  - first:
+      1: 100016
+    second: JawTop
+  - first:
+      1: 100018
+    second: left_jnt
+  - first:
+      1: 100020
+    second: leftEnd_jnt
+  - first:
+      1: 100022
+    second: LeftEye
+  - first:
+      1: 100024
+    second: LeftFoot
+  - first:
+      1: 100026
+    second: LeftHand
+  - first:
+      1: 100028
+    second: LeftIndexDistal
+  - first:
+      1: 100030
+    second: LeftIndexIntermediate
+  - first:
+      1: 100032
+    second: LeftIndexProximal
+  - first:
+      1: 100034
+    second: LeftLittleDistal
+  - first:
+      1: 100036
+    second: LeftLittleIntermediate
+  - first:
+      1: 100038
+    second: LeftLittleProximal
+  - first:
+      1: 100040
+    second: LeftLowerArm
+  - first:
+      1: 100042
+    second: LeftLowerLeg
+  - first:
+      1: 100044
+    second: leftLowHand_jnt
+  - first:
+      1: 100046
+    second: leftLowHandEnd_jnt
+  - first:
+      1: 100048
+    second: LeftMiddleDistal
+  - first:
+      1: 100050
+    second: LeftMiddleIntermediate
+  - first:
+      1: 100052
+    second: LeftMiddleProximal
+  - first:
+      1: 100054
+    second: LeftRingDistal
+  - first:
+      1: 100056
+    second: LeftRingIntermediate
+  - first:
+      1: 100058
+    second: LeftRingProximal
+  - first:
+      1: 100060
+    second: LeftShoulder
+  - first:
+      1: 100062
+    second: LeftThumbDistal
+  - first:
+      1: 100064
+    second: LeftThumbIntermediate
+  - first:
+      1: 100066
+    second: LeftThumbProximal
+  - first:
+      1: 100068
+    second: LeftToes
+  - first:
+      1: 100070
+    second: LeftUpperArm
+  - first:
+      1: 100072
+    second: LeftUpperLeg
+  - first:
+      1: 100074
+    second: //RootNode
+  - first:
+      1: 100076
+    second: Mage_rig:Mage_Rig
+  - first:
+      1: 100078
+    second: Mage_rig:Mage_Rig_MAIN_Ctrl
+  - first:
+      1: 100080
+    second: Mage_rig:Mage_Rig_MAIN_Ctrl_RestPoseGrp
+  - first:
+      1: 100082
+    second: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl
+  - first:
+      1: 100084
+    second: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl_RestPoseGrp
+  - first:
+      1: 100086
+    second: Neck
+  - first:
+      1: 100088
+    second: R_handSpell_Rig
+  - first:
+      1: 100090
+    second: R_prop_jnt
+  - first:
+      1: 100092
+    second: right_jnt
+  - first:
+      1: 100094
+    second: rightEnd_jnt
+  - first:
+      1: 100096
+    second: RightEye
+  - first:
+      1: 100098
+    second: RightFoot
+  - first:
+      1: 100100
+    second: RightHand
+  - first:
+      1: 100102
+    second: RightIndexDistal
+  - first:
+      1: 100104
+    second: RightIndexIntermediate
+  - first:
+      1: 100106
+    second: RightIndexProximal
+  - first:
+      1: 100108
+    second: RightLittleDistal
+  - first:
+      1: 100110
+    second: RightLittleIntermediate
+  - first:
+      1: 100112
+    second: RightLittleProximal
+  - first:
+      1: 100114
+    second: RightLowerArm
+  - first:
+      1: 100116
+    second: RightLowerLeg
+  - first:
+      1: 100118
+    second: rightLowHand_jnt
+  - first:
+      1: 100120
+    second: rightLowHandEnd_jnt
+  - first:
+      1: 100122
+    second: RightMiddleDistal
+  - first:
+      1: 100124
+    second: RightMiddleIntermediate
+  - first:
+      1: 100126
+    second: RightMiddleProximal
+  - first:
+      1: 100128
+    second: RightRingDistal
+  - first:
+      1: 100130
+    second: RightRingIntermediate
+  - first:
+      1: 100132
+    second: RightRingProximal
+  - first:
+      1: 100134
+    second: RightShoulder
+  - first:
+      1: 100136
+    second: RightThumbDistal
+  - first:
+      1: 100138
+    second: RightThumbIntermediate
+  - first:
+      1: 100140
+    second: RightThumbProximal
+  - first:
+      1: 100142
+    second: RightToes
+  - first:
+      1: 100144
+    second: RightUpperArm
+  - first:
+      1: 100146
+    second: RightUpperLeg
+  - first:
+      1: 100148
+    second: Spine
+  - first:
+      1: 100150
+    second: unityHumanoidJoint_grp
+  - first:
+      1: 100152
+    second: UpperChest
+  - first:
+      1: 100154
+    second: Weapon_jnt
+  - first:
+      1: 100156
+    second: Weapon_Rig
+  - first:
+      4: 400000
+    second: back_jnt
+  - first:
+      4: 400002
+    second: backEnd_jnt
+  - first:
+      4: 400004
+    second: Chest
+  - first:
+      4: 400006
+    second: front_jnt
+  - first:
+      4: 400008
+    second: frontEnd_jnt
+  - first:
+      4: 400010
+    second: Head
+  - first:
+      4: 400012
+    second: Hips
+  - first:
+      4: 400014
+    second: Jaw
+  - first:
+      4: 400016
+    second: JawTop
+  - first:
+      4: 400018
+    second: left_jnt
+  - first:
+      4: 400020
+    second: leftEnd_jnt
+  - first:
+      4: 400022
+    second: LeftEye
+  - first:
+      4: 400024
+    second: LeftFoot
+  - first:
+      4: 400026
+    second: LeftHand
+  - first:
+      4: 400028
+    second: LeftIndexDistal
+  - first:
+      4: 400030
+    second: LeftIndexIntermediate
+  - first:
+      4: 400032
+    second: LeftIndexProximal
+  - first:
+      4: 400034
+    second: LeftLittleDistal
+  - first:
+      4: 400036
+    second: LeftLittleIntermediate
+  - first:
+      4: 400038
+    second: LeftLittleProximal
+  - first:
+      4: 400040
+    second: LeftLowerArm
+  - first:
+      4: 400042
+    second: LeftLowerLeg
+  - first:
+      4: 400044
+    second: leftLowHand_jnt
+  - first:
+      4: 400046
+    second: leftLowHandEnd_jnt
+  - first:
+      4: 400048
+    second: LeftMiddleDistal
+  - first:
+      4: 400050
+    second: LeftMiddleIntermediate
+  - first:
+      4: 400052
+    second: LeftMiddleProximal
+  - first:
+      4: 400054
+    second: LeftRingDistal
+  - first:
+      4: 400056
+    second: LeftRingIntermediate
+  - first:
+      4: 400058
+    second: LeftRingProximal
+  - first:
+      4: 400060
+    second: LeftShoulder
+  - first:
+      4: 400062
+    second: LeftThumbDistal
+  - first:
+      4: 400064
+    second: LeftThumbIntermediate
+  - first:
+      4: 400066
+    second: LeftThumbProximal
+  - first:
+      4: 400068
+    second: LeftToes
+  - first:
+      4: 400070
+    second: LeftUpperArm
+  - first:
+      4: 400072
+    second: LeftUpperLeg
+  - first:
+      4: 400074
+    second: //RootNode
+  - first:
+      4: 400076
+    second: Mage_rig:Mage_Rig
+  - first:
+      4: 400078
+    second: Mage_rig:Mage_Rig_MAIN_Ctrl
+  - first:
+      4: 400080
+    second: Mage_rig:Mage_Rig_MAIN_Ctrl_RestPoseGrp
+  - first:
+      4: 400082
+    second: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl
+  - first:
+      4: 400084
+    second: Mage_rig:Mage_Rig_MAIN_Offset_Ctrl_RestPoseGrp
+  - first:
+      4: 400086
+    second: Neck
+  - first:
+      4: 400088
+    second: R_handSpell_Rig
+  - first:
+      4: 400090
+    second: R_prop_jnt
+  - first:
+      4: 400092
+    second: right_jnt
+  - first:
+      4: 400094
+    second: rightEnd_jnt
+  - first:
+      4: 400096
+    second: RightEye
+  - first:
+      4: 400098
+    second: RightFoot
+  - first:
+      4: 400100
+    second: RightHand
+  - first:
+      4: 400102
+    second: RightIndexDistal
+  - first:
+      4: 400104
+    second: RightIndexIntermediate
+  - first:
+      4: 400106
+    second: RightIndexProximal
+  - first:
+      4: 400108
+    second: RightLittleDistal
+  - first:
+      4: 400110
+    second: RightLittleIntermediate
+  - first:
+      4: 400112
+    second: RightLittleProximal
+  - first:
+      4: 400114
+    second: RightLowerArm
+  - first:
+      4: 400116
+    second: RightLowerLeg
+  - first:
+      4: 400118
+    second: rightLowHand_jnt
+  - first:
+      4: 400120
+    second: rightLowHandEnd_jnt
+  - first:
+      4: 400122
+    second: RightMiddleDistal
+  - first:
+      4: 400124
+    second: RightMiddleIntermediate
+  - first:
+      4: 400126
+    second: RightMiddleProximal
+  - first:
+      4: 400128
+    second: RightRingDistal
+  - first:
+      4: 400130
+    second: RightRingIntermediate
+  - first:
+      4: 400132
+    second: RightRingProximal
+  - first:
+      4: 400134
+    second: RightShoulder
+  - first:
+      4: 400136
+    second: RightThumbDistal
+  - first:
+      4: 400138
+    second: RightThumbIntermediate
+  - first:
+      4: 400140
+    second: RightThumbProximal
+  - first:
+      4: 400142
+    second: RightToes
+  - first:
+      4: 400144
+    second: RightUpperArm
+  - first:
+      4: 400146
+    second: RightUpperLeg
+  - first:
+      4: 400148
+    second: Spine
+  - first:
+      4: 400150
+    second: unityHumanoidJoint_grp
+  - first:
+      4: 400152
+    second: UpperChest
+  - first:
+      4: 400154
+    second: Weapon_jnt
+  - first:
+      4: 400156
+    second: Weapon_Rig
+  - first:
+      74: 7400000
+    second: Mage_Attack_v02
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      41386430: 2186277476908879412
+    second: ImportLogs
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -184,8 +506,8 @@ ModelImporter:
       to improve retargeting quality.\n\t'Spine' has translation animation that will
       be discarded.\n\t'Chest' has translation animation that will be discarded.\n\t'UpperChest'
       has translation animation that will be discarded.\n\t'Neck' has translation
-      animation that will be discarded.\n\t'Head' has translation animation that will
-      be discarded.\n"
+      animation that will be discarded.\n\t'Head' has translation animation that
+      will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -201,6 +523,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Mage_Attack_v02
       takeName: Mage_Attack_v02
+      internalID: 0
       firstFrame: 0
       lastFrame: 36
       wrapMode: 0
@@ -221,7 +544,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.49632353
+        functionName: AttackCast
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
@@ -397,25 +727,28 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
     preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -424,10 +757,10 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
-    serializedVersion: 2
+    serializedVersion: 3
     human:
     - boneName: Hips
       humanName: Hips
@@ -1271,14 +1604,17 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 77690ce519ab13e4aab93a59e5573892,
     type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 2
   additionalBone: 0
   userData: 
   assetBundleName: 

@@ -7,12 +7,12 @@ namespace Game_HoldGrounds.Scripts
     /// <summary>
     /// Handles all units spawn and creation for the game (player or enemy).
     /// </summary>
-    public class UnitsManager : MonoBehaviour
+    public class CharacterManager : MonoBehaviour
     {
-        public static UnitsManager Instance { get; private set; }
+        public static CharacterManager Instance { get; private set; }
 
         [Tooltip("List of units to create and compare.")]
-        [SerializeField] private UnitData[] listOfUnits;
+        [SerializeField] private CharacterData[] listOfUnits;
         
         // =============================================================================================================
         private void Awake()
@@ -29,12 +29,16 @@ namespace Game_HoldGrounds.Scripts
         /// Creates a new unit in a given place.
         /// If Ally, it will belongs to the player. If not, it will belongs to the enemy.
         /// </summary>
-        public void SpawnNewUnit(UnitData unit, Vector3 pos, bool isAlly)
+        public void SpawnNewUnit(CharacterData unit, Vector3 pos, bool isAlly)
         {
             for (var i = 0; i < listOfUnits.Length; i++)
             {
-                if (listOfUnits[i] == unit)
-                    Instantiate(listOfUnits[i].unitPrefab, pos, Quaternion.identity);
+                if (listOfUnits[i] != unit)
+                    continue;
+                //Spawn new unit
+                var newUnity = Instantiate(listOfUnits[i].unitPrefab, pos, Quaternion.identity);
+                newUnity.tag = isAlly ? GameTags.TeamBlue : GameTags.TeamRed;
+                break;
             }
         }
         // =============================================================================================================

@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 5023796684308983149}
   - component: {fileID: 5023796684308983151}
   - component: {fileID: 5023796684308983150}
+  - component: {fileID: 5854868193660284567}
   m_Layer: 0
   m_Name: Sheld2
   m_TagString: Untagged
@@ -177,6 +178,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &5854868193660284567
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023796684308983148}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2090e11462620b4cb4bc5bd3e8a96f7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5023796684952309824
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +372,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5023796685393059013
 Transform:
   m_ObjectHideFlags: 0

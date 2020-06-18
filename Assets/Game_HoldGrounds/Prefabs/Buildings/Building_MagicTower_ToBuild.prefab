@@ -1,40 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &6880756289361109454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2632301932082463166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  propType: {fileID: 11400000, guid: aa67b19d8dcd30c4ba8e0269943ad7d1, type: 2}
-  healthPoints: 0
-  uiWindow: {fileID: 7586251696835237294}
-  uiText: {fileID: 2202967353856621815}
-  uiTimerOnScreen: 2
-  actionTimer: 0
-  unitSpawnPosition: {fileID: 0}
---- !u!208 &821560248131507109
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2632301932082463166}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.5, y: 2, z: 1.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 2, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &2323365082416891977
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +99,42 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!208 &821560248131507109
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2632301932082463166}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5, y: 2, z: 1.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &6880756289361109454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2632301932082463166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propType: {fileID: 11400000, guid: aa67b19d8dcd30c4ba8e0269943ad7d1, type: 2}
+  healthPoints: 0
+  actionTimer: 0
+  uiWindow: {fileID: 7586251696835237294}
+  uiText: {fileID: 2202967353856621815}
+  uiTimerOnScreen: 2
+  unitSpawnPosition: {fileID: 5343785264326998578}
+  buildingTrainAnimation: {fileID: 6773075331865647676}
 --- !u!1 &7586251696835237294
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +186,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &8967030136763306629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5343785264326998578}
+  m_Layer: 0
+  m_Name: SpawnUnitPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5343785264326998578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967030136763306629}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.38, z: -3.17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2550333605700969150}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9186655371252798583
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,15 +379,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2251964512379727058, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251964512379727058, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251964512379727058, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2251964512379727058, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2440923671576778527, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
         type: 3}
       propertyPath: m_Name
       value: Building_MagicTower_ToBuild
-      objectReference: {fileID: 0}
-    - target: {fileID: 2440923671576778527, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ally
       objectReference: {fileID: 0}
     - target: {fileID: 2755267743928857631, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
         type: 3}
@@ -424,6 +470,12 @@ GameObject:
 --- !u!4 &2550333605700969150 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2755267743928857631, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
+    type: 3}
+  m_PrefabInstance: {fileID: 385118845585888929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6773075331865647676 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6388069845067664541, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
     type: 3}
   m_PrefabInstance: {fileID: 385118845585888929}
   m_PrefabAsset: {fileID: 0}

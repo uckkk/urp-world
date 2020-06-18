@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 1317304847697448496}
   - component: {fileID: 1317304847697448499}
   - component: {fileID: 1317304847697448501}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Unit_Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1317304847697448498}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.8
+  m_Radius: 0.5
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
@@ -184,6 +184,14 @@ MonoBehaviour:
   currentHealth: 0
   navMeshAgent: {fileID: 1317304847697448499}
   myAnimator: {fileID: 1317304848091611787}
+  layerToSearchFor:
+    serializedVersion: 2
+    m_Bits: 3072
+  checkRadius: 10
+  searchTimer: 2
+  myNearestTarget: {fileID: 0}
+  myMainTarget: {fileID: 0}
+  navMeshDestination: {x: 0, y: 0, z: 0}
 --- !u!1 &1317304848101142731
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +633,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1317304848101142771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -1.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1317304848100650265}

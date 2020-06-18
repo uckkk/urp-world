@@ -25,7 +25,7 @@ namespace Game_HoldGrounds.Scripts
         {
             propData = prop;
             uiPropName.text = propData.propName;
-            uiGoldCosts.text = propData.goldCost.ToString();
+            uiGoldCosts.text = propData.goldCost + " G";
             uiPropImage.sprite = propData.picture;
         }
         // =============================================================================================================

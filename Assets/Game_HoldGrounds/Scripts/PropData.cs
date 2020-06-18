@@ -11,12 +11,16 @@ namespace Game_HoldGrounds.Scripts
         public Sprite picture;
         public ObjectType objectType;
         public int goldCost;
-        public float maxHealthPoints;
+        public float maxHealthPoints = 100;
 
         [Header("====== BUILDINGS - FARM")]
         [Tooltip("How much gold this building generates, in case it is a farm.")]
-        public int goldGenerate = 5;
+        public int goldGenerate;
         [Tooltip("Timer in seconds to wait before the next gold income;")]
-        public float timerForGoldIncome = 5;
+        public float timerForGoldIncome;
+        
+        [Header("====== IF SPAWN UNITS")]
+        [Tooltip("What kind of Unit can this building create, if any.")]
+        public CharacterData unitDataType;
     }
 }

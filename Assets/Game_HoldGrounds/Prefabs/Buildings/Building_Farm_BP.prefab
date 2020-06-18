@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8812733548504775754}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.89, y: 1.8485397, z: -0.38}
-  m_LocalScale: {x: 8.630272, y: 4.0285, z: 5.544717}
+  m_LocalPosition: {x: 1.89, y: 1.8485397, z: -0.31}
+  m_LocalScale: {x: 8.332648, y: 4.0285, z: 5.1488156}
   m_Children: []
   m_Father: {fileID: 1959794612334432256}
   m_RootOrder: 1
@@ -164,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 2933928368140384263, guid: 917c484d823d45544a95a45d9a16b2e0,
         type: 3}
       propertyPath: m_Name
-      value: Building_Farm_BluePrint
+      value: Building_Farm_BP
       objectReference: {fileID: 0}
     - target: {fileID: 2933928368209910773, guid: 917c484d823d45544a95a45d9a16b2e0,
         type: 3}

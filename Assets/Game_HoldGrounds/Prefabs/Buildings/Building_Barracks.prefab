@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 1610349525231055784}
   - component: {fileID: 1610349525231055786}
   - component: {fileID: 1610349525231055785}
+  - component: {fileID: 9144968626577678911}
   m_Layer: 0
   m_Name: Shield_Ember_1
   m_TagString: Untagged
@@ -237,6 +238,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &9144968626577678911
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610349525231055791}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fda70c4d461b652449445f5fc85b049f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3571593990949158121
 GameObject:
   m_ObjectHideFlags: 0

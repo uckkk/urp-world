@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
-  - Ally
+  - FinalTarget
+  - TeamRed
+  - TeamBlue
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Props
   - Ground
   - Building
-  - 
+  - Character
   - 
   - 
   - 

@@ -1,7 +1,6 @@
 ﻿using General.Utilities;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game_HoldGrounds.Scripts
 {
@@ -12,10 +11,17 @@ namespace Game_HoldGrounds.Scripts
     {
         #region SETUP
         [Header("====== PROP SETUP")]
+        [SerializeField] [ReadOnly] private bool isAlly;
         [Tooltip("My type of object in game.")]
         [SerializeField] private PropData propType;
         [Tooltip("Health points of this prop. If it reaches zero, it will be destroyed.")]
         [SerializeField] [ReadOnly] private float healthPoints;
+        /// <summary>
+        /// Our action timer will work for different buildings.
+        /// For farms, it works to control how long it takes to generate gold.
+        /// For barracks, it handles the timer to create a new unity.
+        /// </summary>
+        [SerializeField] private float actionTimer;
         
         [Header("====== UI DATA")]
         [Tooltip("Window to be animated.")]
@@ -25,17 +31,10 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private float uiTimerOnScreen = 2;
         
         [Header("====== SPAWN UNITS ONLY")]
-        [Tooltip("What kind of Unit can this building create.")]
-        [SerializeField] private UnitData unitDataType;
         [Tooltip("Where a new unit will spawn.")]
         [SerializeField] private Transform unitSpawnPosition;
-
-        /// <summary>
-        /// Our action timer will work for different buildings.
-        /// For farms, it works to control how long it takes to generate gold.
-        /// For barracks, it handles the timer to create a new unity.
-        /// </summary>
-        [FormerlySerializedAs("_actionTimer")] [SerializeField] private float actionTimer;
+        [Tooltip("If there is something to animate when building.")]
+        [SerializeField] private Animator buildingTrainAnimation;
 
         /// <summary>
         /// Get prop type of this prop.
@@ -48,7 +47,11 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// Get the unit this building can spawn.
         /// </summary>
-        public UnitData GetUnitDataType => unitDataType;
+        public CharacterData GetUnitDataType => propType.unitDataType;
+        /// <summary>
+        /// Action timer will work for different buildings.
+        /// </summary>
+        public float GetActionTimer => actionTimer;
         
         // =============================================================================================================
         private void Start()
@@ -58,8 +61,8 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         private void Update()
         {
-            Handle_Farms();
-            Handle_Barracks();
+            HandleFarms();
+            HandleTrainingUnits();
         }
         // =============================================================================================================
         /// <summary>
@@ -67,10 +70,13 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void PrepareProp()
         {
+            isAlly = CompareTag(GameTags.TeamBlue);
             healthPoints = propType.maxHealthPoints;
             CloseUiText();
             if (propType.objectType == ObjectType.BuildingFarm)
                 actionTimer = propType.timerForGoldIncome;
+            if (buildingTrainAnimation != null)
+                buildingTrainAnimation.enabled = false;
         }
         // =============================================================================================================
         /// <summary>
@@ -98,7 +104,10 @@ namespace Game_HoldGrounds.Scripts
         
         #region FARMS
         // =============================================================================================================
-        private void Handle_Farms()
+        /// <summary>
+        /// Handle farms in game.
+        /// </summary>
+        private void HandleFarms()
         {
             if (propType.objectType == ObjectType.BuildingFarm)
             {
@@ -114,22 +123,25 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         #endregion
         
-        #region BARRACKS
+        #region BARRACKS, DEF TW, MAGIC TW
         // =============================================================================================================
         /// <summary>
-        /// Handles Barracks behaviours in game.
+        /// Handles training units behaviours in game.
         /// </summary>
-        private void Handle_Barracks()
+        private void HandleTrainingUnits()
         {
-            if (propType.objectType == ObjectType.BuildingBarracks)
+            if (propType.objectType == ObjectType.BuildingBarracks ||
+                propType.objectType == ObjectType.BuildingDefenseTw ||
+                propType.objectType == ObjectType.BuildingMagicTw)
             {
-                //In barracks, timer will count when the player chose to build a unit.
+                //Timer will count when the player chose to build a unit.
                 if (actionTimer <= 0)
                     return;
                 actionTimer -= Time.deltaTime;
                 if (actionTimer <= 0)
                 {
-                    UnitsManager.Instance.SpawnNewUnit(unitDataType, unitSpawnPosition.position, true);
+                    CharacterManager.Instance.SpawnNewUnit(propType.unitDataType, unitSpawnPosition.position, true);
+                    buildingTrainAnimation.enabled = false;
                     ShowUiText("+1");
                 }
             }
@@ -140,17 +152,27 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public void TrainUnit()
         {
-            
+            if (actionTimer > 0)
+                return;
+            actionTimer = propType.unitDataType.timerToSpawn;
+            buildingTrainAnimation.enabled = true;
+            Debug.Log("Training new unity...");
         }
         // =============================================================================================================
         /// <summary>
-        /// Get the progress of the unit creation progress (in %).
+        /// Get the progress of the unit creation progress (in %)
+        /// or in case of Farms, the gold income.
         /// </summary>
         /// <returns></returns>
-        public string GetUnitBuildStatus()
+        public string GetBuildActionTimerStatus()
         {
             if (actionTimer > 0)
-                return (actionTimer / unitDataType.timerToSpawn).ToString("f0") + "%";
+            {
+                if (propType.objectType == ObjectType.BuildingFarm)
+                    return (100 - (actionTimer / propType.timerForGoldIncome * 100)).ToString("f0") + "%";
+                //Barracks, Archer Tower and Wizard Tower
+                return (100 - (actionTimer / propType.unitDataType.timerToSpawn * 100)).ToString("f0") + "%";
+            }
             return "";
         }
         // =============================================================================================================

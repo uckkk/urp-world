@@ -12,7 +12,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 1.5, y: 2, z: 1.5}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 2, z: 0}
   m_TimeToStationary: 0.5
@@ -30,12 +30,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   propType: {fileID: 11400000, guid: 05c00c4d27a160446a487a36b8f7f1f9, type: 2}
   healthPoints: 0
+  actionTimer: 0
   uiWindow: {fileID: 4687443217579128152}
   uiText: {fileID: 2312474157802667750}
   uiTimerOnScreen: 2
-  unitDataType: {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}
   unitSpawnPosition: {fileID: 2231894113211342705}
-  actionTimer: 0
+  buildingTrainAnimation: {fileID: 6315577458773854615}
 --- !u!1 &1845540325548046259
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,15 +434,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3571593991690232649, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571593991690232649, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571593991690232649, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571593991690232649, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3571593991690232654, guid: 28dd8e7326eff7341b2448f4ae7aec93,
         type: 3}
       propertyPath: m_Name
       value: Building_Barracks_ToBuild
-      objectReference: {fileID: 0}
-    - target: {fileID: 3571593991690232654, guid: 28dd8e7326eff7341b2448f4ae7aec93,
-        type: 3}
-      propertyPath: m_TagString
-      value: Ally
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28dd8e7326eff7341b2448f4ae7aec93, type: 3}
@@ -455,6 +470,12 @@ GameObject:
 --- !u!4 &1791550227920095456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3571593991690232648, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+    type: 3}
+  m_PrefabInstance: {fileID: 2975758673259735976}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6315577458773854615 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9144968626577678911, guid: 28dd8e7326eff7341b2448f4ae7aec93,
     type: 3}
   m_PrefabInstance: {fileID: 2975758673259735976}
   m_PrefabAsset: {fileID: 0}

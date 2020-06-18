@@ -1,6 +1,7 @@
 ﻿using General.Utilities;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game_HoldGrounds.Scripts
@@ -47,6 +48,10 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private LayerMask bluePrintBadLayers;
         [Tooltip("Layers that are possible to select with a click in scene.")]
         [SerializeField] private LayerMask selectionAvailableLayers;
+        /// <summary>
+        /// Current prop selected in the scene (it can be a building).
+        /// </summary>
+        [SerializeField] [ReadOnly] private PropBehaviour propSelected;
         
         [Header("====== UI SETUP")]
         [SerializeField] private TextMeshProUGUI uiGoldText;
@@ -55,27 +60,25 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private GameObject uiBuildingBtnPrefab;
         [SerializeField] private Transform uiButtonsParent;
         [SerializeField] private GameObject uiBuildingDetails;
+        [SerializeField] private Image uiBuildSelIcon;
         [SerializeField] private TextMeshProUGUI uiBuildSelName; //building selected name
         [SerializeField] private TextMeshProUGUI uiBuildSelHealth;
         [SerializeField] private TextMeshProUGUI uiBuildSelUnitName;
-        [SerializeField] private TextMeshProUGUI uiBuildSelUnitAtk;
-        [SerializeField] private TextMeshProUGUI uiBuildSelUnitDef;
-        [SerializeField] private GameObject uiBuildSelTrainBtn;
+        [SerializeField] private TextMeshProUGUI uiBuildSelField1;
+        [SerializeField] private TextMeshProUGUI uiBuildSelField2;
+        [SerializeField] private Button uiBuildSelTrainBtn;
         [SerializeField] private Image uiBuildSelUnitImg;
         [SerializeField] private TextMeshProUGUI uiBuildSelTrainStatus;
+        [SerializeField] private Sprite uiGoldIcon;
         
         /// <summary>
         /// Current building blue print selected to build.
         /// </summary>
         private BuildingData _buildingToBuild;
         /// <summary>
-        /// Current prop selected in the scene (it can be a building).
-        /// </summary>
-        private PropBehaviour _propSelected;
-        /// <summary>
         /// Current unit to build selected by the selected building.
         /// </summary>
-        private UnitData _unitToBuild;
+        private CharacterData _unitToBuild;
         private float _unitTimerToBuild;
         private float _unitMaxTimerToBuild;
         
@@ -99,6 +102,7 @@ namespace Game_HoldGrounds.Scripts
         {
             HandleSelection();
             HandleBuilding();
+            UpdateBuildingUi();
         }
         // =============================================================================================================
         private void OnDrawGizmos()
@@ -106,6 +110,8 @@ namespace Game_HoldGrounds.Scripts
             if (!Application.isPlaying)
                 return;
             if (_buildingToBuild == null)
+                return;
+            if (_buildingToBuild.bluePrintCollision == null)
                 return;
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(_buildingToBuild.bluePrintCollision.position,
@@ -168,6 +174,10 @@ namespace Game_HoldGrounds.Scripts
             if (_buildingToBuild == null)
                 return;
             
+            //Are we point into UI instead?
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
+            
             //Check hit position to build.
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hitInfo, 100, buildGroundLayer))
@@ -192,7 +202,7 @@ namespace Game_HoldGrounds.Scripts
                 //Build
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    CreateBuilding();
+                    SpawnBuilding();
                 }
             }
         }
@@ -207,6 +217,10 @@ namespace Game_HoldGrounds.Scripts
             
             if (playerMode != PlayerMode.InScene)
                 return;
+
+            //Are we point into UI instead?
+            if (EventSystem.current.IsPointerOverGameObject())
+                return;
             
             if (Input.GetButtonDown("Fire2"))
             {
@@ -218,10 +232,12 @@ namespace Game_HoldGrounds.Scripts
                 var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out var hitInfo, 1000, selectionAvailableLayers))
                 {
-                    if (hitInfo.transform.CompareTag(GameTags.Ally))
+                    if (hitInfo.transform.CompareTag(GameTags.TeamBlue))
                     {
                         BuildingSelFromScene(hitInfo.transform.GetComponent<PropBehaviour>());
+                        return;
                     }
+                    CancelSelection();
                 }
             }
         }
@@ -229,7 +245,7 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// Creates a building in a given position and rotation.
         /// </summary>
-        private void CreateBuilding()
+        private void SpawnBuilding()
         {
             if (_buildingToBuild == null)
                 return;
@@ -240,7 +256,8 @@ namespace Game_HoldGrounds.Scripts
             }
             levelGold -= _buildingToBuild.propData.goldCost;
             var pos = _buildingToBuild.bluePrint.position;
-            Instantiate(_buildingToBuild.prefabToCreate, pos, _buildingToBuild.bluePrint.rotation);
+            var building = Instantiate(_buildingToBuild.prefabToCreate, pos, _buildingToBuild.bluePrint.rotation);
+            building.tag = GameTags.TeamBlue;
             VfxManager.Instance.CallVFx(0, pos, Quaternion.identity);
             CameraBehaviour.Instance.ShakeCamera_Building();
             UpdatePlayerHud();
@@ -256,6 +273,15 @@ namespace Game_HoldGrounds.Scripts
             _buildingToBuild.ToggleBluePrint(false);
             _buildingToBuild = null;
             playerMode = PlayerMode.InScene;
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Cancel the selection of a building in game.
+        /// </summary>
+        private void CancelSelection()
+        {
+            propSelected = null;
+            uiBuildingDetails.SetActive(false);
         }
         // =============================================================================================================
         /// <summary>
@@ -289,25 +315,30 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void BuildingSelFromScene(PropBehaviour building)
         {
-            _propSelected = building;
-            _unitToBuild = _propSelected.GetUnitDataType;
+            propSelected = building;
+            _unitToBuild = propSelected.GetUnitDataType;
             uiBuildingDetails.SetActive(true);
-            uiBuildSelName.text = _propSelected.GetPropType.propName;
-            uiBuildSelHealth.text = _propSelected.GetHealthPoints + "%";
-            uiBuildSelUnitName.text = _unitToBuild.unitName;
-            uiBuildSelUnitAtk.text = _unitToBuild.atkDistance.ToString();
-            uiBuildSelUnitDef.text = _unitToBuild.defense.ToString();
-            uiBuildSelUnitImg.sprite = _unitToBuild.picture;
-            uiBuildSelTrainStatus.text = _propSelected.GetUnitBuildStatus();
-        }
-        // =============================================================================================================
-        /// <summary>
-        /// Cancel the selection of a building in game.
-        /// </summary>
-        private void CancelSelection()
-        {
-            _propSelected = null;
-            uiBuildingDetails.SetActive(false);
+            uiBuildSelIcon.sprite = propSelected.GetPropType.picture;
+            uiBuildSelName.text = propSelected.GetPropType.propName;
+            if (propSelected.GetPropType.objectType == ObjectType.BuildingFarm)
+            {
+                uiBuildSelUnitName.text = "Gold income";
+                uiBuildSelField1.text = "<color=yellow>+" + propSelected.GetPropType.goldGenerate;
+                uiBuildSelField2.text = "";
+                uiBuildSelUnitImg.sprite = uiGoldIcon;
+                uiBuildSelTrainBtn.interactable = false;
+            }
+            else if (propSelected.GetPropType.objectType == ObjectType.BuildingBarracks ||
+                     propSelected.GetPropType.objectType == ObjectType.BuildingDefenseTw ||
+                     propSelected.GetPropType.objectType == ObjectType.BuildingMagicTw)
+            {
+                uiBuildSelUnitName.text = _unitToBuild.unitName + " (" + _unitToBuild.goldCost + " G)";
+                uiBuildSelField1.text = "<color=red>ATK: " + _unitToBuild.damage;
+                uiBuildSelField2.text = "<color=blue>DEF: " + _unitToBuild.defense;
+                uiBuildSelUnitImg.sprite = _unitToBuild.picture;
+                uiBuildSelTrainBtn.interactable = true;
+            }
+            UpdateBuildingUi();
         }
         // =============================================================================================================
         /// <summary>
@@ -315,15 +346,24 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public void BuildingTrainUnit()
         {
-            if (_propSelected != null && _unitToBuild != null)
+            if (propSelected != null && _unitToBuild != null)
             {
+                if (propSelected.GetActionTimer > 0)
+                {
+                    ShowWarningText("Already training a unit!");
+                    return;
+                }
                 if (levelGold < _unitToBuild.goldCost)
                 {
                     ShowWarningText("Not enough gold to train!");
                     return;
                 }
-                _propSelected.TrainUnit();
+                if (propSelected.GetActionTimer > 0)
+                    return;
+                propSelected.TrainUnit();
                 levelGold -= _unitToBuild.goldCost;
+                UpdatePlayerHud();
+                UpdateBuildingUi();
             }
         }
         // =============================================================================================================
@@ -339,7 +379,7 @@ namespace Game_HoldGrounds.Scripts
         {
             uiWarningText.text = txt;
             if (IsInvoking(nameof(CloseWarningText)))
-                return;
+                CancelInvoke(nameof(CloseWarningText));
             Invoke(nameof(CloseWarningText), warningTxtTimer);
         }
         private void CloseWarningText()
@@ -354,6 +394,17 @@ namespace Game_HoldGrounds.Scripts
         {
             uiGoldText.text = levelGold.ToString();
             uiMoraleText.text = levelMorale + "%";
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Update building UI if selected.
+        /// </summary>
+        private void UpdateBuildingUi()
+        {
+            if (propSelected == null)
+                return;
+            uiBuildSelHealth.text = "Health: " + propSelected.GetHealthPoints + "%";
+            uiBuildSelTrainStatus.text = propSelected.GetBuildActionTimerStatus();
         }
         // =============================================================================================================
         #endregion
@@ -396,7 +447,8 @@ namespace Game_HoldGrounds.Scripts
     /// </summary>
     public static class GameTags
     {
-        public const string Enemy = "Enemy";
-        public const string Ally = "Ally";
+        public const string TeamRed = "TeamRed";
+        public const string TeamBlue = "TeamBlue";
+        public const string FinalTarget = "FinalTarget";
     }
 }
