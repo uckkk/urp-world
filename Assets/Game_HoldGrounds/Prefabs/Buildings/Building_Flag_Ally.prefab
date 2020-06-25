@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 5384247285609441117}
   m_Layer: 0
   m_Name: Building_Flag_Ally
-  m_TagString: TeamBlue
+  m_TagString: FlagBlue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

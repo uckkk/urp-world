@@ -1,28 +1,24 @@
-﻿using General.Utilities;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace Game_HoldGrounds.Scripts
 {
     /// <summary>
-    /// Handles props in-game.
+    /// Handles props in-game, for players or enemies.
     /// </summary>
-    public class PropBehaviour : MonoBehaviour
+    public class PropBehaviour : LiveObject
     {
         #region SETUP
         [Header("====== PROP SETUP")]
-        [SerializeField] [ReadOnly] private bool isAlly;
         [Tooltip("My type of object in game.")]
         [SerializeField] private PropData propType;
-        [Tooltip("Health points of this prop. If it reaches zero, it will be destroyed.")]
-        [SerializeField] [ReadOnly] private float healthPoints;
         /// <summary>
         /// Our action timer will work for different buildings.
         /// For farms, it works to control how long it takes to generate gold.
         /// For barracks, it handles the timer to create a new unity.
         /// </summary>
         [SerializeField] private float actionTimer;
-        
+
         [Header("====== UI DATA")]
         [Tooltip("Window to be animated.")]
         [SerializeField] private GameObject uiWindow;
@@ -31,6 +27,8 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private float uiTimerOnScreen = 2;
         
         [Header("====== SPAWN UNITS ONLY")]
+        [Tooltip("Even this building type can spawn units, set this to true to never spawn.")]
+        [SerializeField] private bool spawnLocked;
         [Tooltip("Where a new unit will spawn.")]
         [SerializeField] private Transform unitSpawnPosition;
         [Tooltip("If there is something to animate when building.")]
@@ -43,7 +41,7 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// Get current health points.
         /// </summary>
-        public float GetHealthPoints => healthPoints;
+        public float GetHealthPoints => GetHealth;
         /// <summary>
         /// Get the unit this building can spawn.
         /// </summary>
@@ -70,8 +68,9 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void PrepareProp()
         {
-            isAlly = CompareTag(GameTags.TeamBlue);
-            healthPoints = propType.maxHealthPoints;
+            if (CompareTag(GameTags.TeamBlue))
+                SetAlly();
+            SetHealth(propType.maxHealthPoints);
             CloseUiText();
             if (propType.objectType == ObjectType.BuildingFarm)
                 actionTimer = propType.timerForGoldIncome;
@@ -100,6 +99,14 @@ namespace Game_HoldGrounds.Scripts
             uiText.text = "";
         }
         // =============================================================================================================
+        /// <summary>
+        /// To be called when this object is destroyed.
+        /// </summary>
+        protected override void OnObjectDestroyed()
+        {
+            VfxManager.Instance.CallVFx(2, transform.position, Quaternion.identity);
+        }
+        // =============================================================================================================
         #endregion
         
         #region FARMS
@@ -114,7 +121,8 @@ namespace Game_HoldGrounds.Scripts
                 actionTimer -= Time.deltaTime;
                 if (actionTimer <= 0)
                 {
-                    GameManager.Instance.GoldAdd(propType.goldGenerate);
+                    if (IsAlly)
+                        GameManager.Instance.GoldAdd(propType.goldGenerate);
                     actionTimer = propType.timerForGoldIncome;
                     ShowUiText("+" + propType.goldGenerate);
                 }
@@ -140,7 +148,7 @@ namespace Game_HoldGrounds.Scripts
                 actionTimer -= Time.deltaTime;
                 if (actionTimer <= 0)
                 {
-                    CharacterManager.Instance.SpawnNewUnit(propType.unitDataType, unitSpawnPosition.position, true);
+                    CharacterManager.Instance.SpawnNewUnit(propType.unitDataType, unitSpawnPosition.position, IsAlly);
                     buildingTrainAnimation.enabled = false;
                     ShowUiText("+1");
                 }
@@ -152,11 +160,10 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public void TrainUnit()
         {
-            if (actionTimer > 0)
+            if (actionTimer > 0 || spawnLocked)
                 return;
             actionTimer = propType.unitDataType.timerToSpawn;
             buildingTrainAnimation.enabled = true;
-            Debug.Log("Training new unity...");
         }
         // =============================================================================================================
         /// <summary>

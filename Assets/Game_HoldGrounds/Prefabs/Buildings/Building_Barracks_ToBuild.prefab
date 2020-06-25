@@ -1,41 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!208 &3866317438926288064
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791550227920095462}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 1.5, y: 2, z: 1.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 2, z: 0}
-  m_TimeToStationary: 0.5
---- !u!114 &8296377692296710599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1791550227920095462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  propType: {fileID: 11400000, guid: 05c00c4d27a160446a487a36b8f7f1f9, type: 2}
-  healthPoints: 0
-  actionTimer: 0
-  uiWindow: {fileID: 4687443217579128152}
-  uiText: {fileID: 2312474157802667750}
-  uiTimerOnScreen: 2
-  unitSpawnPosition: {fileID: 2231894113211342705}
-  buildingTrainAnimation: {fileID: 6315577458773854615}
 --- !u!1 &1845540325548046259
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,6 +99,45 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!208 &3866317438926288064
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791550227920095462}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.5, y: 2, z: 1.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 2, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &8296377692296710599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791550227920095462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlly: 0
+  currentHealth: 0
+  myDefensePower: 0
+  badlyDamagedFx: {fileID: 2477429835929881346}
+  propType: {fileID: 11400000, guid: 05c00c4d27a160446a487a36b8f7f1f9, type: 2}
+  actionTimer: 0
+  uiWindow: {fileID: 4687443217579128152}
+  uiText: {fileID: 2312474157802667750}
+  uiTimerOnScreen: 2
+  unitSpawnPosition: {fileID: 2231894113211342705}
+  buildingTrainAnimation: {fileID: 6315577458773854615}
 --- !u!1 &3771572877741730615
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +462,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_Barracks_ToBuild
       objectReference: {fileID: 0}
+    - target: {fileID: 4407793045277175564, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28dd8e7326eff7341b2448f4ae7aec93, type: 3}
 --- !u!1 &1791550227920095462 stripped
@@ -476,6 +484,12 @@ Transform:
 --- !u!95 &6315577458773854615 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 9144968626577678911, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+    type: 3}
+  m_PrefabInstance: {fileID: 2975758673259735976}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2477429835929881346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 805473562728145066, guid: 28dd8e7326eff7341b2448f4ae7aec93,
     type: 3}
   m_PrefabInstance: {fileID: 2975758673259735976}
   m_PrefabAsset: {fileID: 0}

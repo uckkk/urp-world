@@ -8,7 +8,7 @@ namespace Game_HoldGrounds.Scripts
     public class CharacterAnimEvents : MonoBehaviour
     {
         [SerializeField] private CharacterBehaviour characterScript;
-        
+
         // =============================================================================================================
         public void AttackHit()
         {

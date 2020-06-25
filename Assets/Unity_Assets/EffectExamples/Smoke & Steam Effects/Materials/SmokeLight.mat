@@ -23,7 +23,7 @@ Material:
   m_Name: SmokeLight
   m_Shader: {fileID: 4800000, guid: b7839dad95683814aa64166edc107ae2, type: 3}
   m_ShaderKeywords: _EMISSION _FADING_ON _FLIPBOOKBLENDING_ON _NORMALMAP _SOFTPARTICLES_ON
-  m_LightmapFlags: 0
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 3050
@@ -121,7 +121,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.30188674, g: 0.30188674, b: 0.30188674, a: 1}
+    - _BaseColor: {r: 0.4339623, g: 0.41963333, b: 0.41963333, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}

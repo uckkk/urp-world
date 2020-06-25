@@ -1191,7 +1191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2005082976
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1595,7 +1595,7 @@ GameObject:
   - component: {fileID: 1570354069387343386}
   - component: {fileID: 1570354069387343365}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: 1-GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1675,6 +1675,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1536
   propSelected: {fileID: 0}
+  uiCanvas: {fileID: 2005082975}
   uiGoldText: {fileID: 660156158}
   uiMoraleText: {fileID: 833910918}
   uiWarningText: {fileID: 814352583}

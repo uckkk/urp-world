@@ -16,7 +16,7 @@ MonoBehaviour:
   picture: {fileID: 21300000, guid: 75c40fbc89145aa4aa42a47784ca99b2, type: 3}
   objectType: 1
   goldCost: 40
-  maxHealthPoints: 100
+  maxHealthPoints: 1000
   goldGenerate: 0
   timerForGoldIncome: 0
   unitDataType: {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}

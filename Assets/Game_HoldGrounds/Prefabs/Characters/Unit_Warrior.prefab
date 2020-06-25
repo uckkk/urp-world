@@ -139,7 +139,7 @@ Rigidbody:
   m_GameObject: {fileID: 1317304847697448498}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
@@ -157,8 +157,8 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3
-  m_Acceleration: 8
-  avoidancePriority: 50
+  m_Acceleration: 5
+  avoidancePriority: 20
   m_AngularSpeed: 120
   m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
@@ -180,15 +180,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c60ab4acfabbda44828ad38a2a69a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitData: {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}
+  isAlly: 0
   currentHealth: 0
+  myDefensePower: 0
+  badlyDamagedFx: {fileID: 0}
+  unitData: {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}
   navMeshAgent: {fileID: 1317304847697448499}
   myAnimator: {fileID: 1317304848091611787}
   layerToSearchFor:
     serializedVersion: 2
     m_Bits: 3072
-  checkRadius: 10
-  searchTimer: 2
+  isMelee: 1
+  isInCombat: 0
+  checkForEnemyRadius: 20
+  idleMinimumSpeed: 0.3
+  weaponPosition: {fileID: 1317304848100650219}
+  targetDistance: 0
+  myCurrentVelocity: 0
+  rangedVfxSpawnId: 0
+  startedToShoot: 0
+  searchTimer: 1
   myNearestTarget: {fileID: 0}
   myMainTarget: {fileID: 0}
   navMeshDestination: {x: 0, y: 0, z: 0}
@@ -618,6 +629,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317304848100650259}
   - component: {fileID: 1317304848091611787}
+  - component: {fileID: 3446216331093206087}
   m_Layer: 0
   m_Name: Warrior_bindpose
   m_TagString: Untagged
@@ -660,6 +672,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3446216331093206087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317304848101142771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8658e698262bcc949a6f6a5df3312d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterScript: {fileID: 1317304847697448501}
 --- !u!1 &1317304848101142773
 GameObject:
   m_ObjectHideFlags: 0

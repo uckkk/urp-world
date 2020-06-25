@@ -6,15 +6,15 @@ Assets used:
 - https://assetstore.unity.com/lists/game-hold-grounds-168508
 - https://github.com/UnityTechnologies/UnityTowerDefense_Assets
 
-Github
-- 
+Github (get the project):
+- https://github.com/Unity-Technologies/urp-world
 
 ===== BRIEFING =====
 
-A small (but full) game where you need to destroy the enemy base in different levels.
+A small (but full) game where you need to reach the enemy flag and not lose morale.
+Your units will have to destroy units and buildings in their way.
 Assets are created to make it easy for anyone that wants to create more levels.
-I am using the latest Unity features and plan to keep it up-to-date.
-This project can be used for learning and Alexandre K will create talks around it.
+This project can be used for learning and AlexandreK will create talks around it.
 
 Features
 - MonoBehaviour game objects
@@ -39,24 +39,34 @@ Plus:
 Tower Defense (kinda) with base building.
 
 Main goal:
-- Destroy the enemy base to win the level.
+- Reach the enemy base with any Unit to win.
+- Destroy enemy units and buildings along the way.
+- If you lose all your morale, you lose the game.
 - Score and upgrades are saved.
 
 Gameplay:
 - Your flag defines the radius where you can build.
 - Build farms to collect gold. Farms near trees generates more gold.
 - Build Barracks to create warrior units.
+    - Warriors are weak, but have good defense and speed.
+- Build tower defenses to protect from attacks. You can also create archers from the tower.
+    - Archers have good damage, low defense and speed is ok.
 - Build Magic Towers to create wizards, it also fires a magic ball to close enemies.
-- Build tower defenses to protect from attacks. You can also create archers from that.
+    - Wizards are strong units, but lacks defense and speed.
 - Each unit has 2 modes: attack or defend.
-    - They will attack nearest enemy always.
+    - They will attack the nearest enemy, always.
     - They will defend the nearest ally building while returning to the flag.
 - Each unit lost makes you lose Morale. If you lose all morale, you lose the level.
+    - If an enemy unit reaches your flag, you also lose the level. 
 - Use your units to attack enemy outposts. Cleared outposts enables you new flags (more area to build).
-- Destroy their base to win the level.
-- Each completed level, gives you Gold to upgrade units.
-- Upgrades are saved per game, so you can use those in any level.
+- Enemy will also spawn unit waves from times to times, be ready.
 - The game will keep track of wins, loses and score.
+
+Future:
+- Unit upgrades (using Gold or Experience Points).
+- Levels
+- More units
+- More buildings
 
 ===== UPDATES =====
 
@@ -68,5 +78,5 @@ Gameplay:
 =======================================================
 Author: Alexandre Kikuchi
 alexandrek@unity3d.com
-Tech Evangelist
+Tech Evangelist for Americas
 =======================================================

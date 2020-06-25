@@ -18,8 +18,12 @@ MonoBehaviour:
   maxHealthPoints: 100
   damage: 50
   defense: 5
-  atkDistance: 4
+  atkDistance: 12
+  atkSpeed: 2
   moveSpeed: 3
-  timerToSpawn: 15
+  timerToSpawn: 1
   unitPrefab: {fileID: 2937553089036804783, guid: 8a1d391f5a8cea341ae6f35912317a0d,
     type: 3}
+  teamMaterial:
+  - {fileID: 2100000, guid: 1053a69e8ac1bd7458d5d6959df1cf68, type: 2}
+  - {fileID: 2100000, guid: 56536bae93ee26e44bdc5e12d7f96601, type: 2}

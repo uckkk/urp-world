@@ -54,6 +54,7 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] [ReadOnly] private PropBehaviour propSelected;
         
         [Header("====== UI SETUP")]
+        [SerializeField] private GameObject uiCanvas;
         [SerializeField] private TextMeshProUGUI uiGoldText;
         [SerializeField] private TextMeshProUGUI uiMoraleText;
         [SerializeField] private TextMeshProUGUI uiWarningText;
@@ -129,6 +130,7 @@ namespace Game_HoldGrounds.Scripts
             CloseWarningText();
             
             //Set starting data
+            uiCanvas.SetActive(true);
             UpdatePlayerHud();
             for (var i = 0; i < buildingsAvailable.Length; i++)
             {
@@ -403,7 +405,7 @@ namespace Game_HoldGrounds.Scripts
         {
             if (propSelected == null)
                 return;
-            uiBuildSelHealth.text = "Health: " + propSelected.GetHealthPoints + "%";
+            uiBuildSelHealth.text = "Health: " + propSelected.GetHealthPoints;
             uiBuildSelTrainStatus.text = propSelected.GetBuildActionTimerStatus();
         }
         // =============================================================================================================
@@ -449,6 +451,7 @@ namespace Game_HoldGrounds.Scripts
     {
         public const string TeamRed = "TeamRed";
         public const string TeamBlue = "TeamBlue";
-        public const string FinalTarget = "FinalTarget";
+        public const string FlagRed = "FlagRed";
+        public const string FlagBlue = "FlagBlue";
     }
 }

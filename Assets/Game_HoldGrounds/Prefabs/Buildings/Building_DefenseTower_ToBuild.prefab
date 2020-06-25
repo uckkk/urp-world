@@ -265,8 +265,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlly: 0
+  currentHealth: 0
+  myDefensePower: 0
+  badlyDamagedFx: {fileID: 6557418546128859885}
   propType: {fileID: 11400000, guid: c27da73da79bbdf43a2848fe0f28fac2, type: 2}
-  healthPoints: 0
   actionTimer: 0
   uiWindow: {fileID: 1943303222669908267}
   uiText: {fileID: 3550815572644076023}
@@ -459,6 +462,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_DefenseTower_ToBuild
       objectReference: {fileID: 0}
+    - target: {fileID: 6632396106784704834, guid: 368826abc4f2565419a74134aca83fc3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 368826abc4f2565419a74134aca83fc3, type: 3}
 --- !u!1 &2668987618676229679 stripped
@@ -476,6 +484,12 @@ Transform:
 --- !u!95 &8479769136230876332 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5854868193660284567, guid: 368826abc4f2565419a74134aca83fc3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2661234304629500475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6557418546128859885 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9218371375328647382, guid: 368826abc4f2565419a74134aca83fc3,
     type: 3}
   m_PrefabInstance: {fileID: 2661234304629500475}
   m_PrefabAsset: {fileID: 0}

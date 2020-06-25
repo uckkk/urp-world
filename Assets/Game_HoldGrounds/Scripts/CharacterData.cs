@@ -20,5 +20,7 @@ namespace Game_HoldGrounds.Scripts
         public float moveSpeed = 3;
         public float timerToSpawn = 5;
         public GameObject unitPrefab;
+        [Tooltip("Check GameTags for the order.")]
+        public Material[] teamMaterial;
     }
 }

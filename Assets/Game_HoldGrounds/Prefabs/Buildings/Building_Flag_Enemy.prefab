@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 8395132908512553310}
   m_Layer: 0
   m_Name: Building_Flag_Enemy
-  m_TagString: FinalTarget
+  m_TagString: FlagRed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

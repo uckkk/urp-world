@@ -108,7 +108,7 @@ Rigidbody:
   m_GameObject: {fileID: 2033397239056308233}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
@@ -124,10 +124,10 @@ NavMeshAgent:
   m_GameObject: {fileID: 2033397239056308233}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3
-  m_Acceleration: 8
-  avoidancePriority: 50
+  m_Acceleration: 5
+  avoidancePriority: 20
   m_AngularSpeed: 120
   m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
@@ -150,15 +150,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlly: 0
-  unitData: {fileID: 11400000, guid: ad2244f182cb29346a58550c6c6fe2b1, type: 2}
   currentHealth: 0
+  myDefensePower: 0
+  badlyDamagedFx: {fileID: 0}
+  unitData: {fileID: 11400000, guid: ad2244f182cb29346a58550c6c6fe2b1, type: 2}
   navMeshAgent: {fileID: 9098687217690838041}
   myAnimator: {fileID: 8678568970518398641}
   layerToSearchFor:
     serializedVersion: 2
     m_Bits: 3072
-  checkForEnemyRadius: 10
-  searchTimer: 2
+  isMelee: 0
+  isInCombat: 0
+  checkForEnemyRadius: 20
+  idleMinimumSpeed: 0.3
+  weaponPosition: {fileID: 0}
+  targetDistance: 0
+  myCurrentVelocity: 0
+  rangedVfxSpawnId: 6
+  startedToShoot: 0
+  searchTimer: 1
   myNearestTarget: {fileID: 0}
   myMainTarget: {fileID: 0}
   navMeshDestination: {x: 0, y: 0, z: 0}
@@ -16532,6 +16542,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8678568970518398646}
   - component: {fileID: 8678568970518398641}
+  - component: {fileID: 533769750549663610}
   m_Layer: 0
   m_Name: Mage Blue
   m_TagString: Untagged
@@ -16577,6 +16588,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &533769750549663610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8678568970518398643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8658e698262bcc949a6f6a5df3312d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterScript: {fileID: 4526563786888025472}
 --- !u!1 &8678568970552464956
 GameObject:
   m_ObjectHideFlags: 0
