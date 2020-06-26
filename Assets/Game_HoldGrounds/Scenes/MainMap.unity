@@ -407,6 +407,11 @@ PrefabInstance:
       propertyPath: uiWaveTimer
       value: 
       objectReference: {fileID: 5158608867747869934}
+    - target: {fileID: 7844661562722360281, guid: a665a0a0c8f2d1c4689723138aed9ee4,
+        type: 3}
+      propertyPath: initialWaitTimer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a665a0a0c8f2d1c4689723138aed9ee4, type: 3}
 --- !u!1001 &2601086520882723678
@@ -549,26 +554,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 1-GameManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3731688717240994219, guid: d0b041cd0d3da424785fc92473d2ca02,
-        type: 3}
-      propertyPath: m_textInfo.characterCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3731688717240994219, guid: d0b041cd0d3da424785fc92473d2ca02,
-        type: 3}
-      propertyPath: m_textInfo.wordCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3731688717240994219, guid: d0b041cd0d3da424785fc92473d2ca02,
-        type: 3}
-      propertyPath: m_textInfo.lineCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3731688717240994219, guid: d0b041cd0d3da424785fc92473d2ca02,
-        type: 3}
-      propertyPath: m_textInfo.pageCount
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0b041cd0d3da424785fc92473d2ca02, type: 3}

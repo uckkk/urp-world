@@ -20,3 +20,6 @@ MonoBehaviour:
   goldGenerate: 0
   timerForGoldIncome: 0
   unitDataType: {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}
+  defenseDamage: 0
+  defenseRadiusDistance: 0
+  defenseAttackRate: 0

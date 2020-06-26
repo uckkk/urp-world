@@ -22,5 +22,17 @@ namespace Game_HoldGrounds.Scripts
         public GameObject unitPrefab;
         [Tooltip("Check GameTags for the order.")]
         public Material[] teamMaterial;
+        
+        // =============================================================================================================
+        /// <summary>
+        /// Picture to be used in UI.
+        /// </summary>
+        public Sprite SetPicture {set => picture = value;}
+        // =============================================================================================================
+        /// <summary>
+        /// Picture to be used in UI.
+        /// </summary>
+        public Sprite GetPicture => picture;
+        // =============================================================================================================
     }
 }

@@ -18,6 +18,10 @@ namespace Game_HoldGrounds.Scripts
         public int goldGenerate;
         [Tooltip("Timer in seconds to wait before the next gold income;")]
         public float timerForGoldIncome;
+        [Tooltip("How much gold we can generate from each tree as a Bonus.")]
+        public int extraGoldPerTree;
+        [Tooltip("The radius to search for the trees.")]
+        public float extraGoldSearchRadius;
         
         [Header("====== IF SPAWN UNITS")]
         [Tooltip("What kind of Unit can this building create, if any.")]
@@ -30,5 +34,17 @@ namespace Game_HoldGrounds.Scripts
         public float defenseRadiusDistance;
         [Tooltip("How fast it should attack.")]
         public float defenseAttackRate;
+        
+        // =============================================================================================================
+        /// <summary>
+        /// Picture to be used in UI.
+        /// </summary>
+        public Sprite SetPicture {set => picture = value;}
+        // =============================================================================================================
+        /// <summary>
+        /// Picture to be used in UI.
+        /// </summary>
+        public Sprite GetPicture => picture;
+        // =============================================================================================================
     }
 }

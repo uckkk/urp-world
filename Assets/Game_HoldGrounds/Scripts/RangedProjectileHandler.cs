@@ -35,6 +35,14 @@ namespace Game_HoldGrounds.Scripts
                 VfxManager.Instance.CallVFx(impactHitVfx, transform.position, Quaternion.identity);
                 DisableMySelf();
             }
+            else
+            {
+                if (!col.CompareTag(GameTags.TeamBlue) && !col.CompareTag(GameTags.TeamRed))
+                {
+                    VfxManager.Instance.CallVFx(impactHitVfx, transform.position, Quaternion.identity);
+                    DisableMySelf();
+                }
+            }
         }
         // =============================================================================================================
         /// <summary>

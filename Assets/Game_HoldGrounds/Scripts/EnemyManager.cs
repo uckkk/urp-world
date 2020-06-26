@@ -6,6 +6,8 @@ namespace Game_HoldGrounds.Scripts
 {
     /// <summary>
     /// Handles enemies spawn and management.
+    /// Enemies will be spawned from each Enemy building available.
+    /// But also, some will come from the portal and these waves will be harder and harder.
     /// </summary>
     public class EnemyManager : MonoBehaviour
     {
@@ -53,6 +55,7 @@ namespace Game_HoldGrounds.Scripts
         /// Check when to spawn enemies.
         /// The enemies will be trained, as any other unit in game (like the ones from players).
         /// But the thing is, Enemy does not need to handle Gold management.
+        /// Also, there will be enemies spawned from the portal (the Portal that the player needs to destroy).
         /// </summary>
         private void EnemyWaveHandler()
         {

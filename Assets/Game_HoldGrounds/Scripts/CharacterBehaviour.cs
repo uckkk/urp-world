@@ -19,12 +19,18 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private CharacterData unitData;
         [SerializeField] private NavMeshAgent navMeshAgent;
         [SerializeField] private Animator myAnimator;
-        [Tooltip("What are the game objects this unit will look for.")]
-        [SerializeField] private LayerMask layerToSearchFor;
+        [Tooltip("What are the game objects this unit will look for attack.")]
+        [SerializeField] private LayerMask layerToSearchForAtk;
+        [Tooltip("What are the game objects this unit will look for defend.")]
+        [SerializeField] private LayerMask layerToSearchForDef;
 
         [Header("====== COMBAT")]
         [Tooltip("Set if melee or not. Melee changes how it stops during the NavMesh move position.")]
         [SerializeField] private bool isMelee;
+        [Tooltip("If attacking, this unit will go for the final flag. If not, it will go back to base flag. " +
+                 "Enemy is always attacking.")]
+        [SerializeField] [ReadOnly] private bool isAttacking;
+        [Tooltip("This means this unit found a target to go fight, instead of going to final Flag.")]
         [SerializeField] [ReadOnly] private bool isInCombat;
         [Tooltip("Size of the radius to search for enemy nearby")]
         [SerializeField] private float checkForEnemyRadius = 10;
@@ -46,8 +52,10 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private float searchTimer = 1;
         [Tooltip("Nearest target to attack, Units will prioritize this over the main final target.")]
         [SerializeField] [ReadOnly] private LiveObject myNearestTarget;
-        [Tooltip("The final target, if player destroy this, the game will be over.")]
-        [SerializeField] [ReadOnly] private Transform myMainTarget;
+        [Tooltip("The final target, if the character reaches this, the player wins (or enemy wins).")]
+        [SerializeField] [ReadOnly] private Transform myAttackTarget;
+        [Tooltip("The target that this character needs to defend. Losing this is game over for the player.")]
+        [SerializeField] [ReadOnly] private Transform myDefendTarget;
         [SerializeField] [ReadOnly] private Vector3 navMeshDestination;
         
         private Transform myTransform;
@@ -59,6 +67,16 @@ namespace Game_HoldGrounds.Scripts
         private static readonly int AnimAttack = Animator.StringToHash("Attack");
 
         // =============================================================================================================
+        private void OnEnable()
+        {
+            GameManager.OnAttackModeComplete += OnAttackMode;
+        }
+        // =============================================================================================================
+        private void OnDisable()
+        {
+            GameManager.OnAttackModeComplete -= OnAttackMode;
+        }
+        // =============================================================================================================
         private void Start()
         {
             PrepareUnit();
@@ -69,6 +87,24 @@ namespace Game_HoldGrounds.Scripts
         {
             HandleMovement();
             HandleCombat();
+            HandleDefending();
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Change if this unit will attack or defend. Only works for player units.
+        /// </summary>
+        /// <param name="toggle"></param>
+        private void OnAttackMode(bool toggle)
+        {
+            //This should work only for player units.
+            if (!IsAlly)
+                return;
+
+            isAttacking = toggle;
+            
+            //Reset if we were attacking or pursuing something.
+            myNearestTarget = null;
+            SetDestination(isAttacking ? myAttackTarget.position : myDefendTarget.position);
         }
         // =============================================================================================================
         private void PrepareUnit()
@@ -81,19 +117,24 @@ namespace Game_HoldGrounds.Scripts
                 SetAlly();
                 for (var i = 0; i < skinMat.Length; i++)
                     skinMat[i].material = unitData.teamMaterial[0];
-                myMainTarget = GameObject.FindWithTag(GameTags.FlagRed).transform;
+                myAttackTarget = GameObject.FindWithTag(GameTags.FlagRed).transform;
+                myDefendTarget = GameObject.FindWithTag(GameTags.FlagBlue).transform;
             }
             else
             {
                 for (var i = 0; i < skinMat.Length; i++)
                     skinMat[i].material = unitData.teamMaterial[1];
-                myMainTarget = GameObject.FindWithTag(GameTags.FlagBlue).transform;
+                myAttackTarget = GameObject.FindWithTag(GameTags.FlagBlue).transform;
+                myDefendTarget = GameObject.FindWithTag(GameTags.FlagRed).transform;
             }
             SetHealth(unitData.maxHealthPoints);
             SetDefense(unitData.defense);
             myTransform = GetComponent<Transform>();
             navMeshAgent.speed = unitData.moveSpeed;
-            SetDestination(myMainTarget.position);
+            
+            //Check first destination
+            SetDestination(IsAlly ? myDefendTarget.position : myAttackTarget.position);
+            isAttacking = !IsAlly || GameManager.Instance.GetIfIsAttacking;
         }
         // =============================================================================================================
         /// <summary>
@@ -104,7 +145,7 @@ namespace Game_HoldGrounds.Scripts
             //Check velocity and animate movement
             myCurrentVelocity = navMeshAgent.velocity.magnitude;
             myAnimator.SetFloat(AnimMoveSpeed, myCurrentVelocity);
-            //Set timer to search
+            //Set timer to search for a target
             if (myNearestTarget == null)
             {
                 //If we are in combat, set it false and set the final destination again.
@@ -112,13 +153,16 @@ namespace Game_HoldGrounds.Scripts
                 {
                     isInCombat = false;
                     startedToShoot = false;
-                    SetDestination(myMainTarget.position);
+                    SetDestination(isAttacking ? myAttackTarget.position : myDefendTarget.position);
                 }
                 currentSearchTimer -= Time.deltaTime;
                 if (currentSearchTimer <= 0)
                 {
                     currentSearchTimer = searchTimer;
-                    LookForNearestEnemy();
+                    if (isAttacking)
+                        LookForNearestEnemy();
+                    else
+                        LookForNearestFriendlyBuilding();
                 }
             }
         }
@@ -130,7 +174,9 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void HandleCombat()
         {
-            if (myNearestTarget != null)
+            //Attack wait timer is always on even if you don't have a target
+            atkWaitTimer -= Time.deltaTime;
+            if (myNearestTarget != null && isInCombat)
             {
                 targetDistance = Vector3.Distance(myTransform.position, myNearestTarget.GetPosition);
                 if (targetDistance <= unitData.atkDistance || startedToShoot)
@@ -143,7 +189,6 @@ namespace Game_HoldGrounds.Scripts
                     //Make unit to force stop
                     navMeshAgent.stoppingDistance = 999;
                     //Start attacking
-                    atkWaitTimer -= Time.deltaTime;
                     if (atkWaitTimer <= 0)
                     {
                         atkWaitTimer = unitData.atkSpeed;
@@ -167,6 +212,23 @@ namespace Game_HoldGrounds.Scripts
             }
         }
         // =============================================================================================================
+        /// <summary>
+        /// Handles when this unit is defending
+        /// </summary>
+        private void HandleDefending()
+        {
+            //Check if there are enemies nearby
+            if (myNearestTarget != null && !isAttacking && !isInCombat)
+            {
+                currentSearchTimer -= Time.deltaTime;
+                if (currentSearchTimer <= 0)
+                {
+                    currentSearchTimer = searchTimer;
+                    LookForNearestEnemy();
+                }
+            }
+        }
+        // =============================================================================================================
         public void SetDestination(Vector3 pos)
         {
             navMeshDestination = pos;
@@ -182,7 +244,7 @@ namespace Game_HoldGrounds.Scripts
             var possibleHits = new Collider[20];
             var nearestDist = 999f;
             var size = Physics.OverlapSphereNonAlloc(myTransform.position, checkForEnemyRadius,
-                possibleHits, layerToSearchFor);
+                possibleHits, layerToSearchForAtk);
             for (var i = 0; i < size; i++)
             {
                 if (IsAlly)
@@ -202,6 +264,38 @@ namespace Game_HoldGrounds.Scripts
                     myNearestTarget = possibleHits[i].GetComponent<LiveObject>();
                     SetDestination(myNearestTarget.GetPosition);
                     isInCombat = true;
+                }
+            }
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// It will look for anything allied building that is near, while walking towards the friendly flag to defend.
+        /// </summary>
+        private void LookForNearestFriendlyBuilding()
+        {
+            var possibleHits = new Collider[20];
+            var nearestDist = 999f;
+            var size = Physics.OverlapSphereNonAlloc(myTransform.position, checkForEnemyRadius,
+                possibleHits, layerToSearchForDef);
+            for (var i = 0; i < size; i++)
+            {
+                if (IsAlly)
+                {
+                    if (possibleHits[i].CompareTag(GameTags.TeamRed))
+                        continue;
+                }
+                else
+                {
+                    if (possibleHits[i].CompareTag(GameTags.TeamBlue))
+                        continue;
+                }
+                var dist = Vector3.Distance(myTransform.position, possibleHits[i].transform.position);
+                if (nearestDist > dist)
+                {
+                    nearestDist = dist;
+                    myNearestTarget = possibleHits[i].GetComponent<LiveObject>();
+                    SetDestination(myNearestTarget.GetPosition);
+                    isInCombat = false;
                 }
             }
         }

@@ -187,10 +187,14 @@ MonoBehaviour:
   unitData: {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}
   navMeshAgent: {fileID: 1317304847697448499}
   myAnimator: {fileID: 1317304848091611787}
-  layerToSearchFor:
+  layerToSearchForAtk:
     serializedVersion: 2
     m_Bits: 3072
+  layerToSearchForDef:
+    serializedVersion: 2
+    m_Bits: 1024
   isMelee: 1
+  isAttacking: 0
   isInCombat: 0
   checkForEnemyRadius: 20
   idleMinimumSpeed: 0.3
@@ -201,7 +205,8 @@ MonoBehaviour:
   startedToShoot: 0
   searchTimer: 1
   myNearestTarget: {fileID: 0}
-  myMainTarget: {fileID: 0}
+  myAttackTarget: {fileID: 0}
+  myDefendTarget: {fileID: 0}
   navMeshDestination: {x: 0, y: 0, z: 0}
 --- !u!1 &1317304848101142731
 GameObject:

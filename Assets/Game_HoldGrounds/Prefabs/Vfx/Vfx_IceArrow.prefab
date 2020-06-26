@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3093055226802406261}
   - component: {fileID: 8993503385581123216}
   - component: {fileID: 3449662005503829021}
+  - component: {fileID: 917319839270908993}
   m_Layer: 0
   m_Name: Vfx_IceArrow
   m_TagString: Untagged
@@ -4870,6 +4871,22 @@ MonoBehaviour:
   damage: 0
   timeAlive: 3
   impactHitVfx: 5
+--- !u!54 &917319839270908993
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6050923938342949323}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6051130685498442855
 GameObject:
   m_ObjectHideFlags: 0

@@ -72,7 +72,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.259
+    m_Value: 0.375
     min: 0
     max: 1
   smoothness:
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 1
-    m_Value: 0.1
+    m_Value: 0
   contrast:
     m_OverrideState: 1
     m_Value: 20
@@ -137,13 +137,13 @@ MonoBehaviour:
   m_AdvancedMode: 0
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9814677, z: 0.9814677, w: -0.0006743215}
+    m_Value: {x: 0.86564445, y: 0.9452637, z: 1, w: -0.0006743215}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9656776, z: 0.9585606, w: 0.07673785}
+    m_Value: {x: 0.84358096, y: 0.9052965, z: 1, w: 0.07673785}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 0.988704, y: 0.9413959, z: 1, w: 0.25460902}
+    m_Value: {x: 0.9235895, y: 0.93517053, z: 1, w: 0.25460902}
 --- !u!114 &-952288149775513451
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -160,13 +160,13 @@ MonoBehaviour:
   m_AdvancedMode: 0
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.29205626}
+    m_Value: {x: 0.93290716, y: 0.9735774, z: 1, w: -0.29205626}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.18675722}
+    m_Value: {x: 1, y: 0.9477468, z: 0.9947509, w: 0.18675722}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.0000000018310261}
+    m_Value: {x: 1, y: 0.9404685, z: 0.8550223, w: -0.0000000018310261}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: PP_HoldGrounds
+  m_Name: PP_HoldGrounds-Portal
   m_EditorClassIdentifier: 
   components:
   - {fileID: 849379129802519247}
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
 --- !u!114 &5563323226043113071
 MonoBehaviour:
   m_ObjectHideFlags: 3

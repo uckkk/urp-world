@@ -17,6 +17,11 @@ MonoBehaviour:
   objectType: 0
   goldCost: 20
   maxHealthPoints: 500
-  goldGenerate: 20
+  goldGenerate: 5
   timerForGoldIncome: 10
+  extraGoldPerTree: 5
+  extraGoldSearchRadius: 10
   unitDataType: {fileID: 0}
+  defenseDamage: 0
+  defenseRadiusDistance: 0
+  defenseAttackRate: 0

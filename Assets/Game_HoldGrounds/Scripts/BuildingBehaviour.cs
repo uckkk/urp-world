@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using General.Utilities;
+using TMPro;
 using UnityEngine;
 
 namespace Game_HoldGrounds.Scripts
@@ -63,8 +64,16 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public float GetAtkRate => propType.defenseAttackRate;
         
-        //FOR FARMS
-        private int goldBonusPerTree;
+        [Header("====== FARMS ONLY")]
+        [Tooltip("The layers to search for a tree.")]
+        [SerializeField] private LayerMask layerForTrees;
+        [Tooltip("If there is something to animate when building.")]
+        [SerializeField] [ReadOnly] private int goldBonusPerTree;
+
+        /// <summary>
+        /// Get how much bonus this Farm has because there are trees nearby.
+        /// </summary>
+        public int GetGoldBonusPerTree => goldBonusPerTree;
         
         // =============================================================================================================
         private void Start()
@@ -88,7 +97,14 @@ namespace Game_HoldGrounds.Scripts
             SetHealth(propType.maxHealthPoints);
             CloseUiText();
             if (propType.objectType == ObjectType.BuildingFarm)
+            {
                 actionTimer = propType.timerForGoldIncome;
+                //Look for trees near the farm to generate extra gold.
+                var possibleHits = new Collider[10];
+                var size = Physics.OverlapSphereNonAlloc(transform.position, propType.extraGoldSearchRadius,
+                    possibleHits, layerForTrees);
+                goldBonusPerTree += size * propType.extraGoldPerTree;
+            }
             if (buildingTrainAnimation != null)
                 buildingTrainAnimation.enabled = false;
         }
@@ -120,6 +136,7 @@ namespace Game_HoldGrounds.Scripts
         protected override void OnObjectDestroyed()
         {
             VfxManager.Instance.CallVFx(2, transform.position, Quaternion.identity);
+            VfxManager.Instance.CallVFx(12, transform.position, Quaternion.identity);
             if (IsAlly)
                 GameManager.Instance.MoraleAdd(-1);
         }
@@ -138,10 +155,11 @@ namespace Game_HoldGrounds.Scripts
                 actionTimer -= Time.deltaTime;
                 if (actionTimer <= 0)
                 {
+                    var totalGold = propType.goldGenerate + goldBonusPerTree;
                     if (IsAlly)
-                        GameManager.Instance.GoldAdd(propType.goldGenerate);
+                        GameManager.Instance.GoldAdd(totalGold);
                     actionTimer = propType.timerForGoldIncome;
-                    ShowUiText("+" + propType.goldGenerate);
+                    ShowUiText("+" + totalGold);
                 }
             }
         }

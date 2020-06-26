@@ -19,6 +19,8 @@ MonoBehaviour:
   maxHealthPoints: 800
   goldGenerate: 0
   timerForGoldIncome: 0
+  extraGoldPerTree: 0
+  extraGoldSearchRadius: 0
   unitDataType: {fileID: 11400000, guid: 9b7faac89531f7d4fbafacf2fde4d74f, type: 2}
   defenseDamage: 20
   defenseRadiusDistance: 20

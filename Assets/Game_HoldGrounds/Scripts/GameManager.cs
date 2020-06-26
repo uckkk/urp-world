@@ -20,18 +20,23 @@ namespace Game_HoldGrounds.Scripts
         [Tooltip("Score of the current level. Score is handled by how many units destroyed + enemy base destroy.")]
         [SerializeField] private int levelScore;
         [Tooltip("Gold/money of the current level. Gold is used to buy buildings and units in-game.")]
-        [SerializeField] private int levelGold = 50;
+        [SerializeField] private int levelGold = 100;
         [Tooltip("Morale is your health in this game. Lose Morale and the game is lost.")]
         [SerializeField] private int levelMorale = 100;
         [Tooltip("Tells if the game is playable for the player, paused or not playing at all.")]
         [SerializeField] [ReadOnly] GameState gameState;
         [Tooltip("What the player is currently doing.")]
         [SerializeField] [ReadOnly] PlayerMode playerMode;
-        private int _selectedBuildingId;
+        [Tooltip("Player flag, if the enemy gets here, it is game over. It will auto search during start.")]
+        [SerializeField] [ReadOnly] private Transform flagBlue;
+        [Tooltip("Enemy flag, if the player gets here, the player wins. It will auto search during start.")]
+        [SerializeField] [ReadOnly] private Transform flagRed;
 
         [Header("====== GAME SETUP")]
         [Tooltip("You can only build on grounds with height less than this.")]
         [SerializeField] private float maxHeightToBuild = 0.05f;
+        [Tooltip("Max distance from the Player flag to build anything.")]
+        [SerializeField] private float maxRadiusToBuild = 40;
         [Tooltip("How long the warning text message should be visible on screen.")]
         [SerializeField] private float warningTxtTimer = 3;
         [Tooltip("Main camera of the scene.")]
@@ -52,6 +57,8 @@ namespace Game_HoldGrounds.Scripts
         /// Current prop selected in the scene (it can be a building).
         /// </summary>
         [SerializeField] [ReadOnly] private BuildingBehaviour buildingSelected;
+        [Tooltip("Is the player attacking or defending?")]
+        [SerializeField] [ReadOnly] private bool isAttacking;
         
         [Header("====== UI SETUP")]
         [SerializeField] private GameObject uiCanvas;
@@ -74,6 +81,9 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private TextMeshProUGUI uiBuildSelTrainStatus;
         [SerializeField] private Sprite uiGoldIcon;
         
+        [SerializeField] private GameObject uiMoveModeDetails;
+        [SerializeField] private TextMeshProUGUI uiMoveModeText;
+        
         /// <summary>
         /// Current building blue print selected to build.
         /// </summary>
@@ -84,6 +94,15 @@ namespace Game_HoldGrounds.Scripts
         private CharacterData unitToBuild;
         private float unitTimerToBuild;
         private float unitMaxTimerToBuild;
+        
+        //Event for attacking and defending
+        public delegate void OnCallAttackMode(bool atk);
+        public static event OnCallAttackMode OnAttackModeComplete;
+        
+        /// <summary>
+        /// Get if the player is attacking or defending
+        /// </summary>
+        public bool GetIfIsAttacking => isAttacking;
 
         // =============================================================================================================
         private void Awake()
@@ -127,10 +146,20 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void PrepareMatch()
         {
+            //Search the main flags
+            flagBlue = GameObject.FindGameObjectWithTag(GameTags.FlagBlue).transform;
+            flagRed = GameObject.FindGameObjectWithTag(GameTags.FlagRed).transform;
+            if (flagBlue == null || flagRed == null)
+            {
+                Debug.LogError("ERROR: no flag found, required to play the game!");
+                return;
+            }
+            
             //Set game status
             gameState = GameState.Playing;
             playerMode = PlayerMode.InScene;
             CloseWarningText();
+            AttackMode(false);
             
             //Set starting data
             uiCanvas.SetActive(true);
@@ -142,6 +171,7 @@ namespace Game_HoldGrounds.Scripts
                 script.SetProp(buildingsAvailable[i].propData);
             }
             uiBuildingDetails.SetActive(false);
+            uiMoveModeDetails.SetActive(true);
             
             //Prepare buildings blue prints
             for (var i = 0; i < buildingsAvailable.Length; i++)
@@ -196,6 +226,22 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         #endregion
         
+        #region ATK or DEF/ MODE
+        
+        // =============================================================================================================
+        /// <summary>
+        /// Attack or defend mode. True is for attack.
+        /// </summary>
+        /// <param name="toggle"></param>
+        public void AttackMode(bool toggle)
+        {
+            isAttacking = toggle;
+            uiMoveModeText.text = toggle ? "ATTACKING!" : "DEFENDING!";
+            OnAttackModeComplete?.Invoke(toggle);
+        }
+        // =============================================================================================================
+        #endregion
+        
         #region BUILDINGS
         // =============================================================================================================
         /// <summary>
@@ -212,7 +258,7 @@ namespace Game_HoldGrounds.Scripts
             if (buildingToBuild == null)
                 return;
             
-            //Are we point into UI instead?
+            //Are we over the UI instead?
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
             
@@ -235,9 +281,21 @@ namespace Game_HoldGrounds.Scripts
                     BuildingCheckTouch(true);
                     return;
                 }
-                BuildingCheckTouch(false);
                 
-                //Build
+                //Check if we are close enough from player flag
+                var dist = Vector3.Distance(buildingToBuild.bluePrintCollision.position, flagBlue.position);
+                if (dist > maxRadiusToBuild)
+                {
+                    BuildingCheckTouch(true);
+                    if (Input.GetButtonDown("Fire1"))
+                    {
+                        ShowWarningText("Can't build here, too far from your FLAG!");
+                    }
+                    return;
+                }
+                
+                //OK TO BUILD
+                BuildingCheckTouch(false);
                 if (Input.GetButtonDown("Fire1"))
                 {
                     SpawnBuilding();
@@ -319,6 +377,7 @@ namespace Game_HoldGrounds.Scripts
         {
             buildingSelected = null;
             uiBuildingDetails.SetActive(false);
+            uiMoveModeDetails.SetActive(true);
         }
         // =============================================================================================================
         /// <summary>
@@ -340,10 +399,11 @@ namespace Game_HoldGrounds.Scripts
             {
                 buildingsAvailable[i].ToggleBluePrint(false);
                 if (buildingsAvailable[i].propData == buildingData)
-                    _selectedBuildingId = i;
+                {
+                    buildingToBuild = buildingsAvailable[i];
+                    buildingToBuild.ToggleBluePrint(true);
+                }
             }
-            buildingToBuild = buildingsAvailable[_selectedBuildingId];
-            buildingToBuild.ToggleBluePrint(true);
             playerMode = PlayerMode.BuildingMode;
         }
         // =============================================================================================================
@@ -355,13 +415,15 @@ namespace Game_HoldGrounds.Scripts
             buildingSelected = building;
             unitToBuild = buildingSelected.GetUnitDataType;
             uiBuildingDetails.SetActive(true);
+            uiMoveModeDetails.SetActive(false);
             uiBuildSelIcon.sprite = buildingSelected.GetPropType.picture;
             uiBuildSelName.text = buildingSelected.GetPropType.propName;
             if (buildingSelected.GetPropType.objectType == ObjectType.BuildingFarm)
             {
                 uiBuildSelUnitName.text = "Gold income";
-                uiBuildSelField1.text = "<color=yellow>+" + buildingSelected.GetPropType.goldGenerate;
-                uiBuildSelField2.text = "";
+                uiBuildSelField1.text = "<color=yellow>+" + buildingSelected.GetPropType.goldGenerate + " / " + 
+                                        buildingSelected.GetPropType.timerForGoldIncome + "s";
+                uiBuildSelField2.text = "<color=yellow>Bonus (Trees): +" + buildingSelected.GetGoldBonusPerTree;
                 uiBuildSelUnitImg.sprite = uiGoldIcon;
                 uiBuildSelTrainBtn.interactable = false;
             }
@@ -440,8 +502,16 @@ namespace Game_HoldGrounds.Scripts
             if (buildingSelected == null)
                 return;
             uiBuildSelHealth.text = "Health: " + buildingSelected.GetHealthPoints;
-            uiBuildSelDmg.text = "Damage: +" + buildingSelected.GetDamage;
-            uiBuildSelAtkRate.text = "Atk Rate: 1 / " + buildingSelected.GetAtkRate + " s";
+            if (buildingSelected.GetDamage > 0)
+            {
+                uiBuildSelDmg.text = "Damage: +" + buildingSelected.GetDamage;
+                uiBuildSelAtkRate.text = "Atk Rate: 1 / " + buildingSelected.GetAtkRate + "s";
+            }
+            else
+            {
+                uiBuildSelDmg.text = "";
+                uiBuildSelAtkRate.text = "";
+            }
             uiBuildSelTrainStatus.text = buildingSelected.GetBuildActionTimerStatus();
         }
         // =============================================================================================================

@@ -51,6 +51,50 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!208 &2775244106121829662
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6186048552556362559}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4, y: 2, z: 3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 2, y: 2, z: -0.5}
+  m_TimeToStationary: 0.5
+--- !u!114 &9150759834593931514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6186048552556362559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlly: 0
+  currentHealth: 0
+  myDefensePower: 0
+  badlyDamagedFx: {fileID: 369211605045448523}
+  propType: {fileID: 11400000, guid: c24216df82b727e44b3ff9b2f6dc345e, type: 2}
+  actionTimer: 0
+  uiWindow: {fileID: 4907265777971123696}
+  uiText: {fileID: 8778825285218540632}
+  uiTimerOnScreen: 2
+  spawnLocked: 0
+  unitSpawnPosition: {fileID: 0}
+  buildingTrainAnimation: {fileID: 0}
+  layerForTrees:
+    serializedVersion: 2
+    m_Bits: 256
+  goldBonusPerTree: 0
 --- !u!1 &8642980847539396749
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,45 +251,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!208 &2775244106121829662
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6186048552556362559}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 4, y: 2, z: 3}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 2, y: 2, z: -0.5}
-  m_TimeToStationary: 0.5
---- !u!114 &9150759834593931514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6186048552556362559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAlly: 0
-  currentHealth: 0
-  myDefensePower: 0
-  badlyDamagedFx: {fileID: 369211605045448523}
-  propType: {fileID: 11400000, guid: c24216df82b727e44b3ff9b2f6dc345e, type: 2}
-  actionTimer: 0
-  uiWindow: {fileID: 4907265777971123696}
-  uiText: {fileID: 8778825285218540632}
-  uiTimerOnScreen: 2
-  unitSpawnPosition: {fileID: 0}
-  buildingTrainAnimation: {fileID: 0}
 --- !u!1 &9214275093848309182
 GameObject:
   m_ObjectHideFlags: 0
