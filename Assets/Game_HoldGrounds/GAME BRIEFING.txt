@@ -78,7 +78,6 @@ Future:
 - Add console support.
 
 =======================================================
-Author: Alexandre Kikuchi
-alexandrek@unity3d.com
+Author: Alexandre (Alex) Kikuchi
 Tech Evangelist for Americas
 =======================================================

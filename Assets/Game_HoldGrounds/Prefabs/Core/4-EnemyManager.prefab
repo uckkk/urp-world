@@ -45,5 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialWaitTimer: 20
   waveTimer: 60
+  portalSpawnPosition: {fileID: 0}
+  unitsPortalSpawnPerWave:
+  - {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}
+  - {fileID: 11400000, guid: 9b7faac89531f7d4fbafacf2fde4d74f, type: 2}
+  - {fileID: 11400000, guid: ad2244f182cb29346a58550c6c6fe2b1, type: 2}
   listOfEnemyBuildings: []
   currentWaveTimer: 0
+  waveCounter: 0
+  uiWaveTimer: {fileID: 0}

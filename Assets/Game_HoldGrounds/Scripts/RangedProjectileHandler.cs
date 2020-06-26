@@ -37,7 +37,8 @@ namespace Game_HoldGrounds.Scripts
             }
             else
             {
-                if (!col.CompareTag(GameTags.TeamBlue) && !col.CompareTag(GameTags.TeamRed))
+                if (!col.CompareTag(GameTags.TeamBlue) && !col.CompareTag(GameTags.TeamRed)
+                                                       && !col.CompareTag(GameTags.Nature))
                 {
                     VfxManager.Instance.CallVFx(impactHitVfx, transform.position, Quaternion.identity);
                     DisableMySelf();

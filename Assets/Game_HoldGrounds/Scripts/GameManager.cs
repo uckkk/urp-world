@@ -62,9 +62,11 @@ namespace Game_HoldGrounds.Scripts
         
         [Header("====== UI SETUP")]
         [SerializeField] private GameObject uiCanvas;
+        [SerializeField] private GameObject uiPlayerHud;
         [SerializeField] private TextMeshProUGUI uiGoldText;
         [SerializeField] private TextMeshProUGUI uiMoraleText;
         [SerializeField] private TextMeshProUGUI uiWarningText;
+        [SerializeField] private TextMeshProUGUI uiGamePaceText;
         [SerializeField] private GameObject uiBuildingBtnPrefab;
         [SerializeField] private Transform uiButtonsParent;
         [SerializeField] private GameObject uiBuildingDetails;
@@ -95,10 +97,18 @@ namespace Game_HoldGrounds.Scripts
         private float unitTimerToBuild;
         private float unitMaxTimerToBuild;
         
+        //Event for game state
+        public delegate void OnCallGameState(GameState gState);
+        public static event OnCallGameState OnGameStateChange;
+        
         //Event for attacking and defending
         public delegate void OnCallAttackMode(bool atk);
         public static event OnCallAttackMode OnAttackModeComplete;
         
+        /// <summary>
+        /// Get game state.
+        /// </summary>
+        public GameState GetGameState => gameState;
         /// <summary>
         /// Get if the player is attacking or defending
         /// </summary>
@@ -156,13 +166,14 @@ namespace Game_HoldGrounds.Scripts
             }
             
             //Set game status
-            gameState = GameState.Playing;
+            SetGameState(GameState.Playing);
             playerMode = PlayerMode.InScene;
             CloseWarningText();
             AttackMode(false);
             
             //Set starting data
             uiCanvas.SetActive(true);
+            uiPlayerHud.SetActive(true);
             UpdatePlayerHud();
             for (var i = 0; i < buildingsAvailable.Length; i++)
             {
@@ -186,6 +197,16 @@ namespace Game_HoldGrounds.Scripts
         
         #region MISC
         
+        // =============================================================================================================
+        /// <summary>
+        /// Set game state, it will affect all units and buildings.
+        /// </summary>
+        /// <param name="gState"></param>
+        private void SetGameState(GameState gState)
+        {
+            gameState = gState;
+            OnGameStateChange?.Invoke(gameState);
+        }
         // =============================================================================================================
         /// <summary>
         /// Adds or remove gold to the player.
@@ -221,7 +242,35 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public void ChangeGameSpeed(float speedOption)
         {
+            if (speedOption == 0)
+                uiGamePaceText.text = "Paused";
+            else if (speedOption == 0.5f)
+                uiGamePaceText.text = "Slow Motion";
+            else if (speedOption == 1)
+                uiGamePaceText.text = "Normal Speed";
+            else if (speedOption > 1)
+                uiGamePaceText.text = "Fast Speed";
             Time.timeScale = speedOption;
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Player won
+        /// </summary>
+        public void TriggerWin()
+        {
+            SetGameState(GameState.FinishedWin);
+            Debug.Log("Player WON");
+            uiPlayerHud.SetActive(false);
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Player lost
+        /// </summary>
+        public void TriggerLose()
+        {
+            SetGameState(GameState.FinishedLose);
+            Debug.Log("Player LOST");
+            uiPlayerHud.SetActive(false);
         }
         // =============================================================================================================
         #endregion
@@ -557,5 +606,6 @@ namespace Game_HoldGrounds.Scripts
         public const string TeamBlue = "TeamBlue";
         public const string FlagRed = "FlagRed";
         public const string FlagBlue = "FlagBlue";
+        public const string Nature = "Nature";
     }
 }

@@ -62,6 +62,10 @@ MonoBehaviour:
   spawnLocked: 0
   unitSpawnPosition: {fileID: 5343785264326998578}
   buildingTrainAnimation: {fileID: 6773075331865647676}
+  layerForTrees:
+    serializedVersion: 2
+    m_Bits: 0
+  goldBonusPerTree: 0
 --- !u!1 &1439785533850692871
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +522,11 @@ PrefabInstance:
     - target: {fileID: 2755267743928857631, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2852456634855151980, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2852456635279734236, guid: 34a9d7ce0c9e9334181a5ef89e7b1f21,

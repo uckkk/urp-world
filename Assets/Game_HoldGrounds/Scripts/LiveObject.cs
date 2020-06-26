@@ -9,17 +9,45 @@ namespace Game_HoldGrounds.Scripts
     public class LiveObject : MonoBehaviour
     {
         [Header("====== OBJECT SETUP")]
+        [SerializeField] [ReadOnly] private bool isActivated;
         [SerializeField] [ReadOnly] private bool isAlly;
         [SerializeField] [ReadOnly] private float currentHealth;
         [SerializeField] [ReadOnly] private float myDefensePower;
         [Tooltip("Just to show some nice visuals when it is badly damaged.")]
         [SerializeField] private GameObject badlyDamagedFx;
         
+        protected bool IsActivated => isActivated;
         protected bool IsAlly => isAlly;
         protected float GetHealth => currentHealth;
         public Vector3 GetPosition => transform.position;
         private float maxHealth;
         
+        // =============================================================================================================
+        private void OnEnable()
+        {
+            GameManager.OnGameStateChange += OnGameState;
+        }
+        // =============================================================================================================
+        private void OnDisable()
+        {
+            GameManager.OnGameStateChange -= OnGameState;
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Change this unit behaviour based on game state.
+        /// </summary>
+        private void OnGameState(GameState gState)
+        {
+            SetActivated(gState == GameState.Playing);
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Set if this object is activated for interaction.
+        /// </summary>
+        protected void SetActivated(bool toggle)
+        {
+            isActivated = toggle;
+        }
         // =============================================================================================================
         /// <summary>
         /// Set if this object belongs to the player.

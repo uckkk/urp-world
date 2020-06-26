@@ -57,6 +57,8 @@ namespace Game_HoldGrounds.Scripts
         [Tooltip("The target that this character needs to defend. Losing this is game over for the player.")]
         [SerializeField] [ReadOnly] private Transform myDefendTarget;
         [SerializeField] [ReadOnly] private Vector3 navMeshDestination;
+        [Tooltip("How far this unit is to trigger victory or defeat?")]
+        [SerializeField] [ReadOnly] private float distanceFromFinalDestiny;
         
         private Transform myTransform;
         private float currentSearchTimer;
@@ -88,6 +90,7 @@ namespace Game_HoldGrounds.Scripts
             HandleMovement();
             HandleCombat();
             HandleDefending();
+            HandleWinOrLoseCondition();
         }
         // =============================================================================================================
         /// <summary>
@@ -109,6 +112,10 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         private void PrepareUnit()
         {
+            //Check if it is active
+            if (GameManager.Instance.GetGameState == GameState.Playing)
+                SetActivated(true);
+            
             //Change material and color depending on the team (player or enemy)
             //Also set if it is Ally (player) unit or not
             var skinMat = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -131,10 +138,11 @@ namespace Game_HoldGrounds.Scripts
             SetDefense(unitData.defense);
             myTransform = GetComponent<Transform>();
             navMeshAgent.speed = unitData.moveSpeed;
+            distanceFromFinalDestiny = 999; //just want to make sure if does not trigger as soon as it spawns
             
             //Check first destination
-            SetDestination(IsAlly ? myDefendTarget.position : myAttackTarget.position);
             isAttacking = !IsAlly || GameManager.Instance.GetIfIsAttacking;
+            SetDestination(isAttacking ? myAttackTarget.position : myDefendTarget.position);
         }
         // =============================================================================================================
         /// <summary>
@@ -142,9 +150,12 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void HandleMovement()
         {
+            if (!IsActivated)
+                return;
             //Check velocity and animate movement
             myCurrentVelocity = navMeshAgent.velocity.magnitude;
             myAnimator.SetFloat(AnimMoveSpeed, myCurrentVelocity);
+            
             //Set timer to search for a target
             if (myNearestTarget == null)
             {
@@ -174,6 +185,8 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void HandleCombat()
         {
+            if (!IsActivated)
+                return;
             //Attack wait timer is always on even if you don't have a target
             atkWaitTimer -= Time.deltaTime;
             if (myNearestTarget != null && isInCombat)
@@ -217,6 +230,8 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void HandleDefending()
         {
+            if (!IsActivated)
+                return;
             //Check if there are enemies nearby
             if (myNearestTarget != null && !isAttacking && !isInCombat)
             {
@@ -226,6 +241,28 @@ namespace Game_HoldGrounds.Scripts
                     currentSearchTimer = searchTimer;
                     LookForNearestEnemy();
                 }
+            }
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Handles win or lose condition for all units, player or enemy.
+        /// </summary>
+        private void HandleWinOrLoseCondition()
+        {
+            if (!IsActivated)
+                return;
+            //Only works, if we don't have a target to look for
+            if (myNearestTarget != null)
+                return;
+
+            distanceFromFinalDestiny = Vector3.Distance(myAttackTarget.position, myTransform.position);
+            if (distanceFromFinalDestiny <= 3)
+            {
+                //Trigger win or lose, depending if this unit is from player or not
+                if (IsAlly)
+                    GameManager.Instance.TriggerWin();
+                else
+                    GameManager.Instance.TriggerLose();
             }
         }
         // =============================================================================================================

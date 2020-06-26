@@ -92,6 +92,11 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void PrepareProp()
         {
+            //Check if it is active
+            if (GameManager.Instance.GetGameState == GameState.Playing)
+                SetActivated(true);
+            
+            //Check what team it belongs to
             if (CompareTag(GameTags.TeamBlue))
                 SetAlly();
             SetHealth(propType.maxHealthPoints);
@@ -150,6 +155,9 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void HandleFarms()
         {
+            if (!IsActivated)
+                return;
+            
             if (propType.objectType == ObjectType.BuildingFarm)
             {
                 actionTimer -= Time.deltaTime;
@@ -173,6 +181,9 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void HandleTrainingUnits()
         {
+            if (!IsActivated)
+                return;
+            
             if (propType.objectType == ObjectType.BuildingBarracks ||
                 propType.objectType == ObjectType.BuildingDefenseTw ||
                 propType.objectType == ObjectType.BuildingMagicTw)

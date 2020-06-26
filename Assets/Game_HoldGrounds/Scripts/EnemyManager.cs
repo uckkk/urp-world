@@ -16,9 +16,15 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private float initialWaitTimer = 30;
         [Tooltip("Timer to spawn a wave of enemies.")]
         [SerializeField] private float waveTimer = 60;
+        [Tooltip("Where the big wave spawn. Remember that enemy buildings will also train units.")]
+        [SerializeField] private Transform portalSpawnPosition;
+        [Tooltip("How many units, per counter and per wave, it will spawn from the portal.")]
+        [SerializeField] private CharacterData[] unitsPortalSpawnPerWave;
         [Tooltip("Do not edit this, it will auto fill when game starts.")]
         [SerializeField] [ReadOnly] private BuildingBehaviour[] listOfEnemyBuildings;
         [SerializeField] [ReadOnly] private float currentWaveTimer;
+        [Tooltip("How many waves already gone...")]
+        [SerializeField] [ReadOnly] private int waveCounter;
         
         [Header("====== UI SETUP")]
         [SerializeField] private TextMeshProUGUI uiWaveTimer;
@@ -41,6 +47,7 @@ namespace Game_HoldGrounds.Scripts
         {
             //Prepare wave
             currentWaveTimer = initialWaitTimer;
+            waveCounter = 0;
             
             //Get all enemy buildings in the scene.
             var gos = GameObject.FindGameObjectsWithTag(GameTags.TeamRed);
@@ -64,12 +71,22 @@ namespace Game_HoldGrounds.Scripts
             if (currentWaveTimer <= 0)
             {
                 currentWaveTimer = waveTimer;
-                //Spawn wave
+                waveCounter++;
+                //Train units at the enemy buildings
                 for (var i = 0; i < listOfEnemyBuildings.Length; i++)
                 {
                     //Some enemy buildings might be already destroyed.
                     if (listOfEnemyBuildings[i] != null)
                         listOfEnemyBuildings[i].TrainUnit();
+                }
+                //Spawn wave, each time will be harder
+                for (var i = 0; i < unitsPortalSpawnPerWave.Length; i++)
+                {
+                    for (var x = 0; x < waveCounter; x++)
+                    {
+                        CharacterManager.Instance.SpawnNewUnit(unitsPortalSpawnPerWave[i],
+                            portalSpawnPosition.position, false);
+                    }
                 }
             }
         }
