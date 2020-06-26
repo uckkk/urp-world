@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8483624985814576953}
   - component: {fileID: 8388331121776718990}
-  - component: {fileID: 7589817884559866835}
   m_Layer: 8
   m_Name: _PropScenery_Default
-  m_TagString: Untagged
+  m_TagString: Nature
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -46,26 +45,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7589817884559866835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3586632193633468573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  propType: {fileID: 0}
-  healthPoints: 0
-  uiWindow: {fileID: 0}
-  uiText: {fileID: 0}
-  uiTimerOnScreen: 2
-  unitDataType: {fileID: 0}
-  unitSpawnPosition: {fileID: 0}
-  actionTimer: 0
 --- !u!1 &8789559040898251861
 GameObject:
   m_ObjectHideFlags: 0

@@ -253,6 +253,28 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 2, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &3483754024983637319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2668987618676229679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682df5248f2939c4f8300cf491050575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingTower: {fileID: 2411573068760505561}
+  visualToRotate: {fileID: 9068066429059395386}
+  projectileToShoot: 8
+  layerToSearchFor:
+    serializedVersion: 2
+    m_Bits: 2048
+  timerToSearchForTarget: 2
+  myTarget: {fileID: 0}
+  currentTimerToShoot: 0
+  currentTimerToSearch: 0
 --- !u!114 &7658622446796097189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +296,7 @@ MonoBehaviour:
   uiWindow: {fileID: 1943303222669908267}
   uiText: {fileID: 3550815572644076023}
   uiTimerOnScreen: 2
+  spawnLocked: 0
   unitSpawnPosition: {fileID: 5802100656319078726}
   buildingTrainAnimation: {fileID: 8479769136230876332}
 --- !u!1 &3295934212694631196
@@ -375,6 +398,36 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &6883137055607671448
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2411573068760505561}
+  m_Layer: 0
+  m_Name: AimPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2411573068760505561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6883137055607671448}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.62, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2668987618354583945}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2661234304629500475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -462,6 +515,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Building_DefenseTower_ToBuild
       objectReference: {fileID: 0}
+    - target: {fileID: 5023796685197710232, guid: 368826abc4f2565419a74134aca83fc3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5023796685603739094, guid: 368826abc4f2565419a74134aca83fc3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 6632396106784704834, guid: 368826abc4f2565419a74134aca83fc3,
         type: 3}
       propertyPath: m_RootOrder
@@ -481,9 +544,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2661234304629500475}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &2668987618354583945 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 136441254487962546, guid: 368826abc4f2565419a74134aca83fc3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2661234304629500475}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &8479769136230876332 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5854868193660284567, guid: 368826abc4f2565419a74134aca83fc3,
+    type: 3}
+  m_PrefabInstance: {fileID: 2661234304629500475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9068066429059395386 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6428506797148767489, guid: 368826abc4f2565419a74134aca83fc3,
     type: 3}
   m_PrefabInstance: {fileID: 2661234304629500475}
   m_PrefabAsset: {fileID: 0}

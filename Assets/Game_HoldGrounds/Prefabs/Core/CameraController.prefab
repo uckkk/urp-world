@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 390f972b3a1e62341ad150cbe29782f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boost: 5
+  boost: 4
   positionLerpTime: 0.2
   mouseSensitivityCurve:
     serializedVersion: 2

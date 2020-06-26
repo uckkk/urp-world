@@ -21,7 +21,7 @@ MonoBehaviour:
   atkDistance: 10
   atkSpeed: 2
   moveSpeed: 3
-  timerToSpawn: 1
+  timerToSpawn: 20
   unitPrefab: {fileID: 2033397239056308233, guid: a5879a14d0127a04abff85455b1bacd8,
     type: 3}
   teamMaterial:

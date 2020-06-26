@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 328977850920170162}
   - component: {fileID: 5629707220956929525}
   m_Layer: 0
-  m_Name: VfxManager
+  m_Name: 3-VfxManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,3 +85,7 @@ MonoBehaviour:
   - {fileID: 2416563217811159131, guid: 62f3c1fcc88cfc64bb5964873e54efff, type: 3}
   - {fileID: 8747990679701117260, guid: e02a917d9012c7a4ca8221e6c707a209, type: 3}
   - {fileID: 928358442286225329, guid: bd8bc5403d56b1341aa49ce4e6b3a656, type: 3}
+  - {fileID: 5498836502421175069, guid: 0672f85a84ab3c84380a9cff72f91f28, type: 3}
+  - {fileID: 3288094467987163850, guid: 146fd8a2ce7ad614a89153b1fe1a1916, type: 3}
+  - {fileID: 732131554362377352, guid: deb7d9c38f0607d4a8700b8c1c4cc39a, type: 3}
+  - {fileID: 7782875623937490375, guid: 7e686039ad2b51745b65ee90e202ff58, type: 3}

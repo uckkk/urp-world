@@ -236,6 +236,8 @@ namespace Game_HoldGrounds.Scripts
         protected override void OnObjectDestroyed()
         {
             VfxManager.Instance.CallVFx(3, transform.position, Quaternion.identity);
+            if (IsAlly)
+                GameManager.Instance.MoraleAdd(-1);
         }
         // =============================================================================================================
     }

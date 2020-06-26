@@ -6,10 +6,10 @@ namespace Game_HoldGrounds.Scripts
     /// <summary>
     /// Handles props in-game, for players or enemies.
     /// </summary>
-    public class PropBehaviour : LiveObject
+    public class BuildingBehaviour : LiveObject
     {
         #region SETUP
-        [Header("====== PROP SETUP")]
+        [Header("====== SETUP")]
         [Tooltip("My type of object in game.")]
         [SerializeField] private PropData propType;
         /// <summary>
@@ -50,6 +50,21 @@ namespace Game_HoldGrounds.Scripts
         /// Action timer will work for different buildings.
         /// </summary>
         public float GetActionTimer => actionTimer;
+        /// <summary>
+        /// Get if it is Ally.
+        /// </summary>
+        public bool IsItAlly => IsAlly;
+        /// <summary>
+        /// Get damage that his building can do.
+        /// </summary>
+        public float GetDamage => propType.defenseDamage;
+        /// <summary>
+        /// Get how fast it can take, in case it can.
+        /// </summary>
+        public float GetAtkRate => propType.defenseAttackRate;
+        
+        //FOR FARMS
+        private int goldBonusPerTree;
         
         // =============================================================================================================
         private void Start()
@@ -105,6 +120,8 @@ namespace Game_HoldGrounds.Scripts
         protected override void OnObjectDestroyed()
         {
             VfxManager.Instance.CallVFx(2, transform.position, Quaternion.identity);
+            if (IsAlly)
+                GameManager.Instance.MoraleAdd(-1);
         }
         // =============================================================================================================
         #endregion

@@ -1,5 +1,6 @@
 ﻿using General.Utilities;
 using UnityEngine;
+using TMPro;
 
 namespace Game_HoldGrounds.Scripts
 {
@@ -14,8 +15,11 @@ namespace Game_HoldGrounds.Scripts
         [Tooltip("Timer to spawn a wave of enemies.")]
         [SerializeField] private float waveTimer = 60;
         [Tooltip("Do not edit this, it will auto fill when game starts.")]
-        [SerializeField] [ReadOnly] private PropBehaviour[] listOfEnemyBuildings;
+        [SerializeField] [ReadOnly] private BuildingBehaviour[] listOfEnemyBuildings;
         [SerializeField] [ReadOnly] private float currentWaveTimer;
+        
+        [Header("====== UI SETUP")]
+        [SerializeField] private TextMeshProUGUI uiWaveTimer;
         
         // =============================================================================================================
         private void Start()
@@ -38,10 +42,10 @@ namespace Game_HoldGrounds.Scripts
             
             //Get all enemy buildings in the scene.
             var gos = GameObject.FindGameObjectsWithTag(GameTags.TeamRed);
-            listOfEnemyBuildings = new PropBehaviour[gos.Length];
+            listOfEnemyBuildings = new BuildingBehaviour[gos.Length];
             for (var i = 0; i < gos.Length; i++)
             {
-                listOfEnemyBuildings[i] = gos[i].GetComponent<PropBehaviour>();
+                listOfEnemyBuildings[i] = gos[i].GetComponent<BuildingBehaviour>();
             }
         }
         // =============================================================================================================
@@ -53,6 +57,7 @@ namespace Game_HoldGrounds.Scripts
         private void EnemyWaveHandler()
         {
             currentWaveTimer -= Time.deltaTime;
+            uiWaveTimer.text = currentWaveTimer.ToString("f0") + "s";
             if (currentWaveTimer <= 0)
             {
                 currentWaveTimer = waveTimer;

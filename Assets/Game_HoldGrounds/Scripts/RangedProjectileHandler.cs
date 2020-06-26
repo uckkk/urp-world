@@ -22,6 +22,7 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         private void OnEnable()
         {
+            CancelInvoke(nameof(DisableMySelf));
             Invoke(nameof(DisableMySelf), timeAlive);
         }
         // =============================================================================================================

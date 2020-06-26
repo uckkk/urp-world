@@ -22,5 +22,13 @@ namespace Game_HoldGrounds.Scripts
         [Header("====== IF SPAWN UNITS")]
         [Tooltip("What kind of Unit can this building create, if any.")]
         public CharacterData unitDataType;
+        
+        [Header("====== DEFENSE - BUILDINGS")]
+        [Tooltip("Damage to apply to a Unit if this building shoots something.")]
+        public float defenseDamage;
+        [Tooltip("Distance to start attacking.")]
+        public float defenseRadiusDistance;
+        [Tooltip("How fast it should attack.")]
+        public float defenseAttackRate;
     }
 }

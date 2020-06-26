@@ -51,7 +51,7 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// Current prop selected in the scene (it can be a building).
         /// </summary>
-        [SerializeField] [ReadOnly] private PropBehaviour propSelected;
+        [SerializeField] [ReadOnly] private BuildingBehaviour buildingSelected;
         
         [Header("====== UI SETUP")]
         [SerializeField] private GameObject uiCanvas;
@@ -64,6 +64,8 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private Image uiBuildSelIcon;
         [SerializeField] private TextMeshProUGUI uiBuildSelName; //building selected name
         [SerializeField] private TextMeshProUGUI uiBuildSelHealth;
+        [SerializeField] private TextMeshProUGUI uiBuildSelDmg;
+        [SerializeField] private TextMeshProUGUI uiBuildSelAtkRate;
         [SerializeField] private TextMeshProUGUI uiBuildSelUnitName;
         [SerializeField] private TextMeshProUGUI uiBuildSelField1;
         [SerializeField] private TextMeshProUGUI uiBuildSelField2;
@@ -75,14 +77,14 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// Current building blue print selected to build.
         /// </summary>
-        private BuildingData _buildingToBuild;
+        private BuildingData buildingToBuild;
         /// <summary>
         /// Current unit to build selected by the selected building.
         /// </summary>
-        private CharacterData _unitToBuild;
-        private float _unitTimerToBuild;
-        private float _unitMaxTimerToBuild;
-        
+        private CharacterData unitToBuild;
+        private float unitTimerToBuild;
+        private float unitMaxTimerToBuild;
+
         // =============================================================================================================
         private void Awake()
         {
@@ -101,6 +103,7 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         private void Update()
         {
+            HandleDebugs();
             HandleSelection();
             HandleBuilding();
             UpdateBuildingUi();
@@ -110,13 +113,13 @@ namespace Game_HoldGrounds.Scripts
         {
             if (!Application.isPlaying)
                 return;
-            if (_buildingToBuild == null)
+            if (buildingToBuild == null)
                 return;
-            if (_buildingToBuild.bluePrintCollision == null)
+            if (buildingToBuild.bluePrintCollision == null)
                 return;
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(_buildingToBuild.bluePrintCollision.position,
-                _buildingToBuild.bluePrintCollision.localScale);
+            Gizmos.DrawWireCube(buildingToBuild.bluePrintCollision.position,
+                buildingToBuild.bluePrintCollision.localScale);
         }
         // =============================================================================================================
         /// <summary>
@@ -149,13 +152,46 @@ namespace Game_HoldGrounds.Scripts
             }
         }
         // =============================================================================================================
+        #endregion
+        
+        #region MISC
+        
+        // =============================================================================================================
         /// <summary>
-        /// Adds gold to the player.
+        /// Adds or remove gold to the player.
         /// </summary>
         public void GoldAdd(int goldAmount)
         {
             levelGold += goldAmount;
             UpdatePlayerHud();
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Adds or removes Morale to the player.
+        /// </summary>
+        public void MoraleAdd(int amount)
+        {
+            levelMorale += amount;
+            UpdatePlayerHud();
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Handles debug commands like toggle HUD and cheat codes.
+        /// </summary>
+        private void HandleDebugs()
+        {
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                uiCanvas.SetActive(!uiCanvas.activeSelf);
+            }
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Change time scale speed.
+        /// </summary>
+        public void ChangeGameSpeed(float speedOption)
+        {
+            Time.timeScale = speedOption;
         }
         // =============================================================================================================
         #endregion
@@ -173,7 +209,7 @@ namespace Game_HoldGrounds.Scripts
             if (playerMode != PlayerMode.BuildingMode)
                 return;
             
-            if (_buildingToBuild == null)
+            if (buildingToBuild == null)
                 return;
             
             //Are we point into UI instead?
@@ -184,7 +220,7 @@ namespace Game_HoldGrounds.Scripts
             var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hitInfo, 100, buildGroundLayer))
             {
-                _buildingToBuild.bluePrint.position = hitInfo.point;
+                buildingToBuild.bluePrint.position = hitInfo.point;
                 //Cancel Build
                 if (Input.GetButtonDown("Fire2"))
                 {
@@ -192,9 +228,9 @@ namespace Game_HoldGrounds.Scripts
                     return;
                 }
                 //Check if there is something colliding with the blue print, if yes, not possible to build.
-                var hits = Physics.OverlapBox(_buildingToBuild.bluePrintCollision.position,
-                    _buildingToBuild.bluePrintCollision.localScale / 2, Quaternion.identity, bluePrintBadLayers);
-                if (hits.Length > 0 || _buildingToBuild.bluePrint.position.y > maxHeightToBuild)
+                var hits = Physics.OverlapBox(buildingToBuild.bluePrintCollision.position,
+                    buildingToBuild.bluePrintCollision.localScale / 2, Quaternion.identity, bluePrintBadLayers);
+                if (hits.Length > 0 || buildingToBuild.bluePrint.position.y > maxHeightToBuild)
                 {
                     BuildingCheckTouch(true);
                     return;
@@ -236,7 +272,7 @@ namespace Game_HoldGrounds.Scripts
                 {
                     if (hitInfo.transform.CompareTag(GameTags.TeamBlue))
                     {
-                        BuildingSelFromScene(hitInfo.transform.GetComponent<PropBehaviour>());
+                        BuildingSelFromScene(hitInfo.transform.GetComponent<BuildingBehaviour>());
                         return;
                     }
                     CancelSelection();
@@ -249,20 +285,19 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void SpawnBuilding()
         {
-            if (_buildingToBuild == null)
+            if (buildingToBuild == null)
                 return;
-            if (levelGold < _buildingToBuild.propData.goldCost)
+            if (levelGold < buildingToBuild.propData.goldCost)
             {
                 ShowWarningText("Not enough gold!");
                 return;
             }
-            levelGold -= _buildingToBuild.propData.goldCost;
-            var pos = _buildingToBuild.bluePrint.position;
-            var building = Instantiate(_buildingToBuild.prefabToCreate, pos, _buildingToBuild.bluePrint.rotation);
+            var pos = buildingToBuild.bluePrint.position;
+            var building = Instantiate(buildingToBuild.prefabToCreate, pos, buildingToBuild.bluePrint.rotation);
             building.tag = GameTags.TeamBlue;
             VfxManager.Instance.CallVFx(0, pos, Quaternion.identity);
             CameraBehaviour.Instance.ShakeCamera_Building();
-            UpdatePlayerHud();
+            GoldAdd(-buildingToBuild.propData.goldCost);
             //Clear selected building
             CancelBuilding();
         }
@@ -272,8 +307,8 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void CancelBuilding()
         {
-            _buildingToBuild.ToggleBluePrint(false);
-            _buildingToBuild = null;
+            buildingToBuild.ToggleBluePrint(false);
+            buildingToBuild = null;
             playerMode = PlayerMode.InScene;
         }
         // =============================================================================================================
@@ -282,7 +317,7 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void CancelSelection()
         {
-            propSelected = null;
+            buildingSelected = null;
             uiBuildingDetails.SetActive(false);
         }
         // =============================================================================================================
@@ -292,7 +327,7 @@ namespace Game_HoldGrounds.Scripts
         /// <param name="isLocked"></param>
         private void BuildingCheckTouch(bool isLocked)
         {
-            _buildingToBuild?.SetRenderersMaterial(isLocked, isLocked ? bluePrintLocked : bluePrintUnlocked);
+            buildingToBuild?.SetRenderersMaterial(isLocked, isLocked ? bluePrintLocked : bluePrintUnlocked);
         }
         // =============================================================================================================
         /// <summary>
@@ -307,37 +342,37 @@ namespace Game_HoldGrounds.Scripts
                 if (buildingsAvailable[i].propData == buildingData)
                     _selectedBuildingId = i;
             }
-            _buildingToBuild = buildingsAvailable[_selectedBuildingId];
-            _buildingToBuild.ToggleBluePrint(true);
+            buildingToBuild = buildingsAvailable[_selectedBuildingId];
+            buildingToBuild.ToggleBluePrint(true);
             playerMode = PlayerMode.BuildingMode;
         }
         // =============================================================================================================
         /// <summary>
         /// Select a building from the scene (already built).
         /// </summary>
-        private void BuildingSelFromScene(PropBehaviour building)
+        private void BuildingSelFromScene(BuildingBehaviour building)
         {
-            propSelected = building;
-            _unitToBuild = propSelected.GetUnitDataType;
+            buildingSelected = building;
+            unitToBuild = buildingSelected.GetUnitDataType;
             uiBuildingDetails.SetActive(true);
-            uiBuildSelIcon.sprite = propSelected.GetPropType.picture;
-            uiBuildSelName.text = propSelected.GetPropType.propName;
-            if (propSelected.GetPropType.objectType == ObjectType.BuildingFarm)
+            uiBuildSelIcon.sprite = buildingSelected.GetPropType.picture;
+            uiBuildSelName.text = buildingSelected.GetPropType.propName;
+            if (buildingSelected.GetPropType.objectType == ObjectType.BuildingFarm)
             {
                 uiBuildSelUnitName.text = "Gold income";
-                uiBuildSelField1.text = "<color=yellow>+" + propSelected.GetPropType.goldGenerate;
+                uiBuildSelField1.text = "<color=yellow>+" + buildingSelected.GetPropType.goldGenerate;
                 uiBuildSelField2.text = "";
                 uiBuildSelUnitImg.sprite = uiGoldIcon;
                 uiBuildSelTrainBtn.interactable = false;
             }
-            else if (propSelected.GetPropType.objectType == ObjectType.BuildingBarracks ||
-                     propSelected.GetPropType.objectType == ObjectType.BuildingDefenseTw ||
-                     propSelected.GetPropType.objectType == ObjectType.BuildingMagicTw)
+            else if (buildingSelected.GetPropType.objectType == ObjectType.BuildingBarracks ||
+                     buildingSelected.GetPropType.objectType == ObjectType.BuildingDefenseTw ||
+                     buildingSelected.GetPropType.objectType == ObjectType.BuildingMagicTw)
             {
-                uiBuildSelUnitName.text = _unitToBuild.unitName + " (" + _unitToBuild.goldCost + " G)";
-                uiBuildSelField1.text = "<color=red>ATK: " + _unitToBuild.damage;
-                uiBuildSelField2.text = "<color=blue>DEF: " + _unitToBuild.defense;
-                uiBuildSelUnitImg.sprite = _unitToBuild.picture;
+                uiBuildSelUnitName.text = unitToBuild.unitName + " (" + unitToBuild.goldCost + " G)";
+                uiBuildSelField1.text = "<color=red>ATK: " + unitToBuild.damage;
+                uiBuildSelField2.text = "<color=blue>DEF: " + unitToBuild.defense;
+                uiBuildSelUnitImg.sprite = unitToBuild.picture;
                 uiBuildSelTrainBtn.interactable = true;
             }
             UpdateBuildingUi();
@@ -348,23 +383,22 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public void BuildingTrainUnit()
         {
-            if (propSelected != null && _unitToBuild != null)
+            if (buildingSelected != null && unitToBuild != null)
             {
-                if (propSelected.GetActionTimer > 0)
+                if (buildingSelected.GetActionTimer > 0)
                 {
                     ShowWarningText("Already training a unit!");
                     return;
                 }
-                if (levelGold < _unitToBuild.goldCost)
+                if (levelGold < unitToBuild.goldCost)
                 {
                     ShowWarningText("Not enough gold to train!");
                     return;
                 }
-                if (propSelected.GetActionTimer > 0)
+                if (buildingSelected.GetActionTimer > 0)
                     return;
-                propSelected.TrainUnit();
-                levelGold -= _unitToBuild.goldCost;
-                UpdatePlayerHud();
+                buildingSelected.TrainUnit();
+                GoldAdd(-unitToBuild.goldCost);
                 UpdateBuildingUi();
             }
         }
@@ -403,10 +437,12 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void UpdateBuildingUi()
         {
-            if (propSelected == null)
+            if (buildingSelected == null)
                 return;
-            uiBuildSelHealth.text = "Health: " + propSelected.GetHealthPoints;
-            uiBuildSelTrainStatus.text = propSelected.GetBuildActionTimerStatus();
+            uiBuildSelHealth.text = "Health: " + buildingSelected.GetHealthPoints;
+            uiBuildSelDmg.text = "Damage: +" + buildingSelected.GetDamage;
+            uiBuildSelAtkRate.text = "Atk Rate: 1 / " + buildingSelected.GetAtkRate + " s";
+            uiBuildSelTrainStatus.text = buildingSelected.GetBuildActionTimerStatus();
         }
         // =============================================================================================================
         #endregion
@@ -440,9 +476,7 @@ namespace Game_HoldGrounds.Scripts
         BuildingFarm = 0,
         BuildingBarracks = 1,
         BuildingDefenseTw = 2,
-        BuildingMagicTw = 3,
-        NatureTree = 4,
-        NatureRock = 5
+        BuildingMagicTw = 3
     }
     /// <summary>
     /// Tags in game, to be easier to modify in case we need.
