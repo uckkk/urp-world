@@ -9,6 +9,7 @@ TagManager:
   - FlagRed
   - FlagBlue
   - Nature
+  - PortalSpawn
   layers:
   - Default
   - TransparentFX

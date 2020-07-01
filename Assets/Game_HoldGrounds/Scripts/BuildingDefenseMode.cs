@@ -46,6 +46,9 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void HandleTarget()
         {
+            if (!buildingMain.IsEnabled)
+                return;
+            
             if (myTarget == null)
             {
                 currentTimerToSearch -= Time.deltaTime;
@@ -54,6 +57,12 @@ namespace Game_HoldGrounds.Scripts
                     currentTimerToSearch = timerToSearchForTarget;
                     LookForNearestEnemy();
                 }
+                return;
+            }
+            //Check if target is still alive, I will do this so the target will have time to play death animation
+            if (myTarget.GetMyHealth <= 0)
+            {
+                myTarget = null;
                 return;
             }
             

@@ -19,16 +19,17 @@ namespace Game_HoldGrounds.Scripts
         protected bool IsActivated => isActivated;
         protected bool IsAlly => isAlly;
         protected float GetHealth => currentHealth;
+        public float GetMyHealth => currentHealth;
         public Vector3 GetPosition => transform.position;
         private float maxHealth;
         
         // =============================================================================================================
-        private void OnEnable()
+        protected void OnEnable()
         {
             GameManager.OnGameStateChange += OnGameState;
         }
         // =============================================================================================================
-        private void OnDisable()
+        protected void OnDisable()
         {
             GameManager.OnGameStateChange -= OnGameState;
         }
@@ -38,7 +39,7 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void OnGameState(GameState gState)
         {
-            SetActivated(gState == GameState.Playing);
+             SetActivated(gState == GameState.Playing);
         }
         // =============================================================================================================
         /// <summary>
@@ -84,6 +85,11 @@ namespace Game_HoldGrounds.Scripts
         /// <param name="dmgAmount"></param>
         public void TakeDamage(float dmgAmount)
         {
+            if (currentHealth <= 0)
+            {
+                //Unit/building is dead already
+                return;
+            }
             currentHealth -= Mathf.Abs(dmgAmount - myDefensePower);
             if (badlyDamagedFx != null)
                 badlyDamagedFx.SetActive(currentHealth < maxHealth / 2);
@@ -91,7 +97,6 @@ namespace Game_HoldGrounds.Scripts
             {
                 Debug.Log("Object destroyed: " + name);
                 OnObjectDestroyed();
-                Destroy(gameObject);
             }
         }
         // =============================================================================================================

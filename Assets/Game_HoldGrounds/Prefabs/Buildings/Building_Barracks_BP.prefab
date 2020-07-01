@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5127865023979037926}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.8485397, z: -1.02}
-  m_LocalScale: {x: 4.02615, y: 4.0285, z: 4.805015}
+  m_LocalScale: {x: 3, y: 4, z: 5}
   m_Children: []
   m_Father: {fileID: 2732519199924758633}
   m_RootOrder: 1
@@ -160,6 +160,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Building_Barracks_BP
+      objectReference: {fileID: 0}
+    - target: {fileID: 4407793045277175564, guid: 28dd8e7326eff7341b2448f4ae7aec93,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3571593991690232650, guid: 28dd8e7326eff7341b2448f4ae7aec93, type: 3}

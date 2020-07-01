@@ -67,20 +67,17 @@ namespace Game_HoldGrounds.Scripts
         
         private static readonly int AnimMoveSpeed = Animator.StringToHash("MoveSpeed");
         private static readonly int AnimAttack = Animator.StringToHash("Attack");
+        private static readonly int AnimIsDead = Animator.StringToHash("IsDead");
 
         // =============================================================================================================
-        private void OnEnable()
-        {
-            GameManager.OnAttackModeComplete += OnAttackMode;
-        }
-        // =============================================================================================================
-        private void OnDisable()
+        protected void OnDestroy()
         {
             GameManager.OnAttackModeComplete -= OnAttackMode;
         }
         // =============================================================================================================
         private void Start()
         {
+            GameManager.OnAttackModeComplete += OnAttackMode;
             PrepareUnit();
             LookForNearestEnemy();
         }
@@ -259,10 +256,7 @@ namespace Game_HoldGrounds.Scripts
             if (distanceFromFinalDestiny <= 3)
             {
                 //Trigger win or lose, depending if this unit is from player or not
-                if (IsAlly)
-                    GameManager.Instance.TriggerWin();
-                else
-                    GameManager.Instance.TriggerLose();
+                GameManager.Instance.TriggerFinishGame(IsAlly);
             }
         }
         // =============================================================================================================
@@ -346,6 +340,9 @@ namespace Game_HoldGrounds.Scripts
             {
                 VfxManager.Instance.CallVFx(1, weaponPosition.position, Quaternion.identity);
                 myNearestTarget.TakeDamage(unitData.damage);
+                //Check if target is still alive, I will do this so the target will have time to play death animation
+                if (myNearestTarget.GetMyHealth <= 0)
+                    myNearestTarget = null;
             }
         }
         // =============================================================================================================
@@ -358,6 +355,9 @@ namespace Game_HoldGrounds.Scripts
             {
                 VfxManager.Instance.CastProjectile(rangedVfxSpawnId, myTransform.position, myTransform.rotation,
                     IsAlly, unitData.damage);
+                //Check if target is still alive, I will do this so the target will have time to play death animation
+                if (myNearestTarget.GetMyHealth <= 0)
+                    myNearestTarget = null;
             }
         }
         // =============================================================================================================
@@ -366,9 +366,31 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         protected override void OnObjectDestroyed()
         {
+            //Change tag, so this unit will not be a target anymore
+            tag = GameTags.Untagged;
+            //Play animation
+            myAnimator.SetTrigger(AnimIsDead);
+            //Destroy
+            Invoke(nameof(DestroyAfterAnimation), 2);
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Just destroy the gameObject
+        /// </summary>
+        private void DestroyAfterAnimation()
+        {
             VfxManager.Instance.CallVFx(3, transform.position, Quaternion.identity);
             if (IsAlly)
+            {
                 GameManager.Instance.MoraleAdd(-1);
+                GameManager.Instance.AddUnitLost();
+            }
+            else
+            {
+                GameManager.Instance.ScorePerUnit();
+                GameManager.Instance.AddUnitDestroyed();
+            }
+            Destroy(gameObject);
         }
         // =============================================================================================================
     }

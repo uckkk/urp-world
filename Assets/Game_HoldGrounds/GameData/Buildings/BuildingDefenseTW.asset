@@ -22,6 +22,6 @@ MonoBehaviour:
   extraGoldPerTree: 0
   extraGoldSearchRadius: 0
   unitDataType: {fileID: 11400000, guid: 9b7faac89531f7d4fbafacf2fde4d74f, type: 2}
-  defenseDamage: 20
-  defenseRadiusDistance: 20
+  defenseDamage: 40
+  defenseRadiusDistance: 25
   defenseAttackRate: 2

@@ -287,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActivated: 0
   isAlly: 0
   currentHealth: 0
   myDefensePower: 0
@@ -299,6 +300,10 @@ MonoBehaviour:
   spawnLocked: 0
   unitSpawnPosition: {fileID: 5802100656319078726}
   buildingTrainAnimation: {fileID: 8479769136230876332}
+  layerForTrees:
+    serializedVersion: 2
+    m_Bits: 0
+  goldBonusPerTree: 0
 --- !u!1 &3295934212694631196
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,12 +508,17 @@ PrefabInstance:
     - target: {fileID: 136441254691646483, guid: 368826abc4f2565419a74134aca83fc3,
         type: 3}
       propertyPath: m_Size.z
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 136441254691646483, guid: 368826abc4f2565419a74134aca83fc3,
         type: 3}
       propertyPath: m_Center.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 136441254691646483, guid: 368826abc4f2565419a74134aca83fc3,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 136441254691646484, guid: 368826abc4f2565419a74134aca83fc3,
         type: 3}

@@ -18,8 +18,8 @@ MonoBehaviour:
   goldCost: 20
   maxHealthPoints: 500
   goldGenerate: 5
-  timerForGoldIncome: 10
-  extraGoldPerTree: 5
+  timerForGoldIncome: 15
+  extraGoldPerTree: 3
   extraGoldSearchRadius: 10
   unitDataType: {fileID: 0}
   defenseDamage: 0

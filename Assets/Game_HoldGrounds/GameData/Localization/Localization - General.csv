@@ -1,0 +1,37 @@
+ID,English,Portuguese-Br,Spanish,End line
+start,Start,Começar,Começar,-
+exit,Exit,Sair,Salida,-
+back,Back,Voltar,Volver,-
+accept,Accept,Aceitar,Aceptar,-
+cancel,Cancel,Cancelar,Cancelar,-
+paused,Paused,Pausado,Pausado,-
+continue,Continue,Continuar,Seguir,-
+loadGame,Load Game,Carregar jogo,Cargar juego,-
+saveGame,Save Game,Salvar jogo,Guardar partida,-
+newGame,New Game,Novo jogo,Nuevo juego,-
+backToMenu,Back to Menu,Voltar ao menu,Volver al menú,-
+selectLevel,Select Level,Selecione a fase,Selecciona el nivel,-
+normalSpeed,Normal speed,Velocidade normal,Velocidad normal,-
+fastSpeed,Fast speed,Velocidade rápida,Rápida velocidad,-
+halfSpeed,Half speed,Meia velocidade,A media velocidad,-
+gold,Gold,Ouro,Oro,-
+morale,Morale,Moral,Moral,-
+score,Score,Ponto,Puntuación,-
+waveIn,Wave in,Ataque em,Ataque en,-
+msgTrainAll,You can train all units possible in all available buildings.,Você pode treinar todas as unidades possíveis em todos os edifícios disponíveis.,Puedes entrenar todas las unidades posibles en todos los edificios disponibles.,-
+msgUnits,Your units can attack or defend. They will always go for the enemy Flag and fight with units or buildings along the way.,Suas unidades podem atacar ou defender. Eles sempre vão para a bandeira inimiga e lutam com unidades ou edifícios ao longo do caminho.,Tus unidades pueden atacar o defender. Siempre irán por la bandera enemiga y lucharán con unidades o edificios en el camino.,-
+attacking,Attacking!,Atacando!,Atacando!,-
+defending,Defending!,Defendendo!,Defendiendo!,-
+trainAll,Train All,Treinar tudo,Entrenar a todos,-
+health,Health,Saúde,Salud,-
+goldIncome,Gold income,Renda de ouro,Ingreso de oro,-
+damage,Damage,Dano,Dañar,-
+atkRate,Atk Rate,Taxa de Atq,Tasa de atk,-
+youWon,You WON,Você ganhou,Ganaste,-
+youLost,You LOST,Você perdeu,Perdiste,-
+levelComplete,Level complete!,Nível completo!,¡Nivel completado!,-
+levelNotComplete,Level not complete!,Nível não concluído!,Nivel no completo!,-
+finalScore,Final Score,Pontuação final,Puntuación final,-
+unitsLost,Units lost,Unidades perdidas,Unidades perdidas,-
+unitsDestroyed,Units destroyed,Unidades destruídas,Unidades destruidas,-
+-,-,-,-,-

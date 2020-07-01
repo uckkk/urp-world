@@ -34,6 +34,12 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private Transform unitSpawnPosition;
         [Tooltip("If there is something to animate when building.")]
         [SerializeField] private Animator buildingTrainAnimation;
+        
+        [Header("====== FARMS ONLY")]
+        [Tooltip("The layers to search for a tree.")]
+        [SerializeField] private LayerMask layerForTrees;
+        [Tooltip("If there is something to animate when building.")]
+        [SerializeField] [ReadOnly] private int goldBonusPerTree;
 
         /// <summary>
         /// Get prop type of this prop.
@@ -52,6 +58,10 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public float GetActionTimer => actionTimer;
         /// <summary>
+        /// Get if it building is still working.
+        /// </summary>
+        public bool IsEnabled => IsActivated;
+        /// <summary>
         /// Get if it is Ally.
         /// </summary>
         public bool IsItAlly => IsAlly;
@@ -63,18 +73,22 @@ namespace Game_HoldGrounds.Scripts
         /// Get how fast it can take, in case it can.
         /// </summary>
         public float GetAtkRate => propType.defenseAttackRate;
-        
-        [Header("====== FARMS ONLY")]
-        [Tooltip("The layers to search for a tree.")]
-        [SerializeField] private LayerMask layerForTrees;
-        [Tooltip("If there is something to animate when building.")]
-        [SerializeField] [ReadOnly] private int goldBonusPerTree;
-
         /// <summary>
         /// Get how much bonus this Farm has because there are trees nearby.
         /// </summary>
         public int GetGoldBonusPerTree => goldBonusPerTree;
+
+        /// <summary>
+        /// We will use this to change the shader properties.
+        /// </summary>
+        private Renderer[] myRenderers;
         
+        /// <summary>
+        /// Name of the shader property. This one in Shader Graph is boolean, but in code it is interpreted as
+        /// float, being either 0 or 1.
+        /// </summary>
+        private static readonly int ShaderHighlight = Shader.PropertyToID("_ChangeFx");
+
         // =============================================================================================================
         private void Start()
         {
@@ -112,6 +126,9 @@ namespace Game_HoldGrounds.Scripts
             }
             if (buildingTrainAnimation != null)
                 buildingTrainAnimation.enabled = false;
+            
+            //Get renderers
+            myRenderers = gameObject.GetComponentsInChildren<Renderer>();
         }
         // =============================================================================================================
         /// <summary>
@@ -144,6 +161,24 @@ namespace Game_HoldGrounds.Scripts
             VfxManager.Instance.CallVFx(12, transform.position, Quaternion.identity);
             if (IsAlly)
                 GameManager.Instance.MoraleAdd(-1);
+            else
+                GameManager.Instance.ScorePerBuilding();
+            Destroy(gameObject);
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Check if this building was selected by the player, just change it's visual.
+        /// </summary>
+        /// <param name="sel"></param>
+        public void BuildingSelectedToggle(bool sel)
+        {
+            for (var x = 0; x < myRenderers.Length; x++)
+            {
+                for (var i = 0; i < myRenderers[x].materials.Length; i++)
+                {
+                    myRenderers[x].materials[i].SetFloat(ShaderHighlight, sel ? 1 : 0);
+                }
+            }
         }
         // =============================================================================================================
         #endregion
@@ -203,6 +238,7 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         /// <summary>
         /// Train unit from the current building.
+        /// Gold calculations is done in GameManager.
         /// </summary>
         public void TrainUnit()
         {

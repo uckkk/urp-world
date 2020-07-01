@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace Game_HoldGrounds.Scripts
 {
     /// <summary>
-    /// Manages the entire game (start, save, load and finish).
+    /// Manage all game levels.
     /// Check the Text file "GAME BRIEFING" to know more.
     /// </summary>
     public class GameManager : MonoBehaviour
@@ -23,14 +23,20 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private int levelGold = 100;
         [Tooltip("Morale is your health in this game. Lose Morale and the game is lost.")]
         [SerializeField] private int levelMorale = 100;
+        [Tooltip("Keep track of units lost.")]
+        [SerializeField] private int unitsLost;
+        [Tooltip("Keep track of units destroyed (not buildings).")]
+        [SerializeField] private int unitsDestroyed;
+        [Tooltip("How much score you make when you destroy an unit.")]
+        [SerializeField] private int scorePerUnit = 1;
+        [Tooltip("How much score you make when you destroy a building.")]
+        [SerializeField] private int scorePerBuilding = 1;
         [Tooltip("Tells if the game is playable for the player, paused or not playing at all.")]
-        [SerializeField] [ReadOnly] GameState gameState;
+        [SerializeField] [ReadOnly] private GameState gameState;
         [Tooltip("What the player is currently doing.")]
-        [SerializeField] [ReadOnly] PlayerMode playerMode;
+        [SerializeField] [ReadOnly] private PlayerMode playerMode;
         [Tooltip("Player flag, if the enemy gets here, it is game over. It will auto search during start.")]
         [SerializeField] [ReadOnly] private Transform flagBlue;
-        [Tooltip("Enemy flag, if the player gets here, the player wins. It will auto search during start.")]
-        [SerializeField] [ReadOnly] private Transform flagRed;
 
         [Header("====== GAME SETUP")]
         [Tooltip("You can only build on grounds with height less than this.")]
@@ -53,6 +59,8 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private LayerMask bluePrintBadLayers;
         [Tooltip("Layers that are possible to select with a click in scene.")]
         [SerializeField] private LayerMask selectionAvailableLayers;
+        [Tooltip("We will add here all buildings the player created, so we can search for it later.")]
+        [SerializeField] private Transform parentForBuildings;
         /// <summary>
         /// Current prop selected in the scene (it can be a building).
         /// </summary>
@@ -63,8 +71,12 @@ namespace Game_HoldGrounds.Scripts
         [Header("====== UI SETUP")]
         [SerializeField] private GameObject uiCanvas;
         [SerializeField] private GameObject uiPlayerHud;
+        [SerializeField] private GameObject uiFinishHud;
+        [SerializeField] private GameObject uiWinHud;
+        [SerializeField] private GameObject uiLoseHud;
         [SerializeField] private TextMeshProUGUI uiGoldText;
         [SerializeField] private TextMeshProUGUI uiMoraleText;
+        [SerializeField] private TextMeshProUGUI uiScoreText;
         [SerializeField] private TextMeshProUGUI uiWarningText;
         [SerializeField] private TextMeshProUGUI uiGamePaceText;
         [SerializeField] private GameObject uiBuildingBtnPrefab;
@@ -82,9 +94,12 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private Image uiBuildSelUnitImg;
         [SerializeField] private TextMeshProUGUI uiBuildSelTrainStatus;
         [SerializeField] private Sprite uiGoldIcon;
-        
         [SerializeField] private GameObject uiMoveModeDetails;
         [SerializeField] private TextMeshProUGUI uiMoveModeText;
+        [SerializeField] private TextMeshProUGUI uiWaveTimer;
+        [SerializeField] private TextMeshProUGUI uiStatsScore;
+        [SerializeField] private TextMeshProUGUI uiStatsUnitsLost;
+        [SerializeField] private TextMeshProUGUI uiStatsUnitsDestroyed;
         
         /// <summary>
         /// Current building blue print selected to build.
@@ -157,13 +172,15 @@ namespace Game_HoldGrounds.Scripts
         private void PrepareMatch()
         {
             //Search the main flags
-            flagBlue = GameObject.FindGameObjectWithTag(GameTags.FlagBlue).transform;
-            flagRed = GameObject.FindGameObjectWithTag(GameTags.FlagRed).transform;
-            if (flagBlue == null || flagRed == null)
+            var goFlag1 = GameObject.FindGameObjectWithTag(GameTags.FlagBlue);
+            var goFlag2 = GameObject.FindGameObjectWithTag(GameTags.FlagRed);
+            if (goFlag1 == null || goFlag2 == null)
             {
                 Debug.LogError("ERROR: no flag found, required to play the game!");
                 return;
             }
+            flagBlue = goFlag1.transform;
+            // flagRed = goFlag2.transform;
             
             //Set game status
             SetGameState(GameState.Playing);
@@ -174,6 +191,9 @@ namespace Game_HoldGrounds.Scripts
             //Set starting data
             uiCanvas.SetActive(true);
             uiPlayerHud.SetActive(true);
+            uiFinishHud.SetActive(false);
+            uiWinHud.SetActive(false);
+            uiLoseHud.SetActive(false);
             UpdatePlayerHud();
             for (var i = 0; i < buildingsAvailable.Length; i++)
             {
@@ -204,8 +224,27 @@ namespace Game_HoldGrounds.Scripts
         /// <param name="gState"></param>
         private void SetGameState(GameState gState)
         {
+            Debug.Log("Game state changed: " + gState);
             gameState = gState;
             OnGameStateChange?.Invoke(gameState);
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Adds score when destroy an unit.
+        /// </summary>
+        public void ScorePerUnit()
+        {
+            levelScore += scorePerUnit;
+            UpdatePlayerHud();
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Adds score when destroy a building.
+        /// </summary>
+        public void ScorePerBuilding()
+        {
+            levelScore += scorePerBuilding;
+            UpdatePlayerHud();
         }
         // =============================================================================================================
         /// <summary>
@@ -224,6 +263,13 @@ namespace Game_HoldGrounds.Scripts
         {
             levelMorale += amount;
             UpdatePlayerHud();
+            
+            //Check if player lost
+            if (levelMorale <= 0)
+            {
+                levelMorale = 0;
+                TriggerFinishGame(false);
+            }
         }
         // =============================================================================================================
         /// <summary>
@@ -235,6 +281,22 @@ namespace Game_HoldGrounds.Scripts
             {
                 uiCanvas.SetActive(!uiCanvas.activeSelf);
             }
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Adds a player unit was lost.
+        /// </summary>
+        public void AddUnitLost()
+        {
+            unitsLost++;
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Adds an enemy unit was destroyed.
+        /// </summary>
+        public void AddUnitDestroyed()
+        {
+            unitsDestroyed++;
         }
         // =============================================================================================================
         /// <summary>
@@ -254,23 +316,22 @@ namespace Game_HoldGrounds.Scripts
         }
         // =============================================================================================================
         /// <summary>
-        /// Player won
+        /// Player won or lost.
         /// </summary>
-        public void TriggerWin()
+        public void TriggerFinishGame(bool playerWon)
         {
-            SetGameState(GameState.FinishedWin);
-            Debug.Log("Player WON");
+            SetGameState(playerWon ? GameState.FinishedWin : GameState.FinishedLose);
+            ChangeGameSpeed(1);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            Debug.Log("Player won? " + playerWon);
             uiPlayerHud.SetActive(false);
-        }
-        // =============================================================================================================
-        /// <summary>
-        /// Player lost
-        /// </summary>
-        public void TriggerLose()
-        {
-            SetGameState(GameState.FinishedLose);
-            Debug.Log("Player LOST");
-            uiPlayerHud.SetActive(false);
+            uiFinishHud.SetActive(true);
+            uiWinHud.SetActive(playerWon);
+            uiLoseHud.SetActive(!playerWon);
+            uiStatsScore.text = levelScore.ToString();
+            uiStatsUnitsLost.text = unitsLost.ToString();
+            uiStatsUnitsDestroyed.text = unitsDestroyed.ToString();
         }
         // =============================================================================================================
         #endregion
@@ -347,7 +408,7 @@ namespace Game_HoldGrounds.Scripts
                 BuildingCheckTouch(false);
                 if (Input.GetButtonDown("Fire1"))
                 {
-                    SpawnBuilding();
+                    CreateBuilding();
                 }
             }
         }
@@ -390,7 +451,7 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// Creates a building in a given position and rotation.
         /// </summary>
-        private void SpawnBuilding()
+        private void CreateBuilding()
         {
             if (buildingToBuild == null)
                 return;
@@ -400,7 +461,8 @@ namespace Game_HoldGrounds.Scripts
                 return;
             }
             var pos = buildingToBuild.bluePrint.position;
-            var building = Instantiate(buildingToBuild.prefabToCreate, pos, buildingToBuild.bluePrint.rotation);
+            var building = Instantiate(buildingToBuild.prefabToCreate, pos,
+                buildingToBuild.bluePrint.rotation, parentForBuildings);
             building.tag = GameTags.TeamBlue;
             VfxManager.Instance.CallVFx(0, pos, Quaternion.identity);
             CameraBehaviour.Instance.ShakeCamera_Building();
@@ -424,6 +486,8 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void CancelSelection()
         {
+            if (buildingSelected != null)
+                buildingSelected.BuildingSelectedToggle(false);
             buildingSelected = null;
             uiBuildingDetails.SetActive(false);
             uiMoveModeDetails.SetActive(true);
@@ -461,7 +525,11 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void BuildingSelFromScene(BuildingBehaviour building)
         {
+            if (buildingSelected != null)
+                buildingSelected.BuildingSelectedToggle(false);
+            
             buildingSelected = building;
+            buildingSelected.BuildingSelectedToggle(true);
             unitToBuild = buildingSelected.GetUnitDataType;
             uiBuildingDetails.SetActive(true);
             uiMoveModeDetails.SetActive(false);
@@ -490,28 +558,53 @@ namespace Game_HoldGrounds.Scripts
         }
         // =============================================================================================================
         /// <summary>
-        /// Train a unit from the selected building.
+        /// Train a unit from the selected building (called from UI).
         /// </summary>
         public void BuildingTrainUnit()
         {
             if (buildingSelected != null && unitToBuild != null)
             {
-                if (buildingSelected.GetActionTimer > 0)
-                {
-                    ShowWarningText("Already training a unit!");
-                    return;
-                }
-                if (levelGold < unitToBuild.goldCost)
-                {
-                    ShowWarningText("Not enough gold to train!");
-                    return;
-                }
-                if (buildingSelected.GetActionTimer > 0)
-                    return;
-                buildingSelected.TrainUnit();
-                GoldAdd(-unitToBuild.goldCost);
-                UpdateBuildingUi();
+                BuildingTryToTrainUnit(buildingSelected, unitToBuild, true);
             }
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Try to train all possible units in all buildings available.
+        /// </summary>
+        public void TrainAllPossibleUnits()
+        {
+            ShowWarningText("Training all units possible!");
+            var allBuildings = parentForBuildings.GetComponentsInChildren<BuildingBehaviour>();
+            for (var i = 0; i < allBuildings.Length; i++)
+            {
+                BuildingTryToTrainUnit(allBuildings[i], allBuildings[i].GetUnitDataType, false);
+            }
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Check if the selected building can really train a unit
+        /// </summary>
+        /// <param name="building"></param>
+        /// <param name="unit"></param>
+        /// <param name="showErrorMsgs"></param>
+        /// <returns></returns>
+        private void BuildingTryToTrainUnit(BuildingBehaviour building, CharacterData unit, bool showErrorMsgs)
+        {
+            if (building.GetActionTimer > 0)
+            {
+                if (showErrorMsgs) ShowWarningText("Already training a unit!");
+                return;
+            }
+            if (levelGold < unit.goldCost)
+            {
+                if (showErrorMsgs) ShowWarningText("Not enough gold to train!");
+                return;
+            }
+            if (building.GetActionTimer > 0)
+                return;
+            building.TrainUnit();
+            GoldAdd(-unit.goldCost);
+            UpdateBuildingUi();
         }
         // =============================================================================================================
         #endregion
@@ -541,6 +634,7 @@ namespace Game_HoldGrounds.Scripts
         {
             uiGoldText.text = levelGold.ToString();
             uiMoraleText.text = levelMorale + "%";
+            uiScoreText.text = levelScore.ToString();
         }
         // =============================================================================================================
         /// <summary>
@@ -562,6 +656,15 @@ namespace Game_HoldGrounds.Scripts
                 uiBuildSelAtkRate.text = "";
             }
             uiBuildSelTrainStatus.text = buildingSelected.GetBuildActionTimerStatus();
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Set wave timer from EnemyManager.
+        /// </summary>
+        /// <param name="amount"></param>
+        public void SetUiWaveTimer(float amount)
+        {
+            uiWaveTimer.text = amount.ToString("f0") + "s";
         }
         // =============================================================================================================
         #endregion
@@ -602,10 +705,12 @@ namespace Game_HoldGrounds.Scripts
     /// </summary>
     public static class GameTags
     {
+        public const string Untagged = "Untagged";
         public const string TeamRed = "TeamRed";
         public const string TeamBlue = "TeamBlue";
         public const string FlagRed = "FlagRed";
         public const string FlagBlue = "FlagBlue";
         public const string Nature = "Nature";
+        public const string PortalSpawn = "PortalSpawn";
     }
 }

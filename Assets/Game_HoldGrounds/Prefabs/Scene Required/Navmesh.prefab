@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7710051246422937292
+--- !u!1 &1768572626578861556
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7113127750237583924}
-  - component: {fileID: 7844661562722360281}
+  - component: {fileID: 1768572626578861554}
+  - component: {fileID: 1768572626578861557}
   m_Layer: 0
-  m_Name: 4-EnemyManager
+  m_Name: Navmesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7113127750237583924
+--- !u!4 &1768572626578861554
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7710051246422937292}
+  m_GameObject: {fileID: 1768572626578861556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -31,26 +31,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7844661562722360281
+--- !u!114 &1768572626578861557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7710051246422937292}
+  m_GameObject: {fileID: 1768572626578861556}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f3aaaaeb5baf514f9ac7a6a8bb77f5d, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c15f64fd833b454588415084e154574, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialWaitTimer: 20
-  waveTimer: 60
-  portalSpawnPosition: {fileID: 0}
-  unitsPortalSpawnPerWave:
-  - {fileID: 11400000, guid: ab9a04c288272694ba458d3e167d27bd, type: 2}
-  - {fileID: 11400000, guid: 9b7faac89531f7d4fbafacf2fde4d74f, type: 2}
-  - {fileID: 11400000, guid: ad2244f182cb29346a58550c6c6fe2b1, type: 2}
-  listOfEnemyBuildings: []
-  currentWaveTimer: 0
-  waveCounter: 0
-  uiWaveTimer: {fileID: 0}
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 769
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 1
+  m_TileSize: 128
+  m_OverrideVoxelSize: 1
+  m_VoxelSize: 0.1
+  m_BuildHeightMesh: 0
+  m_NavMeshData: {fileID: 23800000, guid: 75c3b811b0b7aeb4c879483205d1f64f, type: 2}

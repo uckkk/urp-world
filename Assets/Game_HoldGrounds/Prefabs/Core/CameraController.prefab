@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shakeScript: {fileID: 6129684539677211700}
+  cameraController: {fileID: 4957470437281674626}
 --- !u!114 &6129684539677211700
 MonoBehaviour:
   m_ObjectHideFlags: 0
