@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924a9b299082e05478eee0c1f31a41ce, type: 3}
   m_Name: Archer
   m_EditorClassIdentifier: 
-  unitName: Archer
+  unitName: archer
   picture: {fileID: 21300000, guid: 790a35c584210d54495da87548418aed, type: 3}
   goldCost: 70
   maxHealthPoints: 100

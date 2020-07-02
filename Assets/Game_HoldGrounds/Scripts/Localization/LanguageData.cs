@@ -1,5 +1,4 @@
-﻿using General.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -146,6 +145,24 @@ namespace Game_HoldGrounds.Scripts.Localization
 		{
 			// Debug.Log("idName: " + idName);
 			return localizedGeneralTextList.Find(x => x.textName == idName).languageList[languageSelected];
+		}
+		// =========================================================================================================
+		/// <summary>
+		/// Get localized text based on localization ID.
+		/// </summary>
+		public string Language_GetBuildingName(string idName)
+		{
+			// Debug.Log("idName: " + idName);
+			return localizedBuildingsList.Find(x => x.textName == idName).languageList[languageSelected];
+		}
+		// =========================================================================================================
+		/// <summary>
+		/// Get localized text based on localization ID.
+		/// </summary>
+		public string Language_GetCharacterName(string idName)
+		{
+			// Debug.Log("idName: " + idName);
+			return localizedCharactersList.Find(x => x.textName == idName).languageList[languageSelected];
 		}
 		// =========================================================================================================
 	}

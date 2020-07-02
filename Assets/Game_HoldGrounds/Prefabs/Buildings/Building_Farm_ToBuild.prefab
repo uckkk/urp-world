@@ -51,50 +51,134 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!208 &2775244106121829662
-NavMeshObstacle:
+--- !u!1 &8637701284687326911
+GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6186048552556362559}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 4, y: 2, z: 3}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 2, y: 2, z: -0.5}
-  m_TimeToStationary: 0.5
---- !u!114 &9150759834593931514
-MonoBehaviour:
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6788990684149334735}
+  - component: {fileID: 5568303363945039273}
+  m_Layer: 10
+  m_Name: AudioBuild
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6788990684149334735
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6186048552556362559}
+  m_GameObject: {fileID: 8637701284687326911}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6186048552556362553}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &5568303363945039273
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8637701284687326911}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAlly: 0
-  currentHealth: 0
-  myDefensePower: 0
-  badlyDamagedFx: {fileID: 369211605045448523}
-  propType: {fileID: 11400000, guid: c24216df82b727e44b3ff9b2f6dc345e, type: 2}
-  actionTimer: 0
-  uiWindow: {fileID: 4907265777971123696}
-  uiText: {fileID: 8778825285218540632}
-  uiTimerOnScreen: 2
-  spawnLocked: 0
-  unitSpawnPosition: {fileID: 0}
-  buildingTrainAnimation: {fileID: 0}
-  layerForTrees:
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 5296644607479576083, guid: 3707819f988d0694c94f3cdd5be76331,
+    type: 2}
+  m_audioClip: {fileID: 8300000, guid: 3fcb7fef61bc54750bd9dde9a1280199, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0
+  MinDistance: 10
+  MaxDistance: 50
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
     serializedVersion: 2
-    m_Bits: 256
-  goldBonusPerTree: 0
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8642980847539396749
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,6 +335,51 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!208 &2775244106121829662
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6186048552556362559}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 4, y: 2, z: 3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 2, y: 2, z: -0.5}
+  m_TimeToStationary: 0.5
+--- !u!114 &9150759834593931514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6186048552556362559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6652a5db3da5716489556ea3dbcd9bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActivated: 0
+  isAlly: 0
+  currentHealth: 0
+  myDefensePower: 0
+  badlyDamagedFx: {fileID: 369211605045448523}
+  propType: {fileID: 11400000, guid: c24216df82b727e44b3ff9b2f6dc345e, type: 2}
+  actionTimer: 0
+  uiWindow: {fileID: 4907265777971123696}
+  uiText: {fileID: 8778825285218540632}
+  uiTimerOnScreen: 2
+  spawnLocked: 0
+  unitSpawnPosition: {fileID: 0}
+  buildingTrainAnimation: {fileID: 0}
+  layerForTrees:
+    serializedVersion: 2
+    m_Bits: 256
+  goldBonusPerTree: 0
 --- !u!1 &9214275093848309182
 GameObject:
   m_ObjectHideFlags: 0

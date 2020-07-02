@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 924a9b299082e05478eee0c1f31a41ce, type: 3}
   m_Name: Wizard
   m_EditorClassIdentifier: 
-  unitName: Wizard
+  unitName: wizard
   picture: {fileID: 21300000, guid: 306d7f9b5a0460a46a972e8f126895d2, type: 3}
   goldCost: 120
   maxHealthPoints: 100

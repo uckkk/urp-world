@@ -7,6 +7,7 @@ namespace Game_HoldGrounds.Scripts
     public class CharacterData : ScriptableObject
     {
         [Header("====== UNIT SETUP")]
+        [Tooltip("This name will be used for localization.")]
         public string unitName;
         public Sprite picture;
         public int goldCost;

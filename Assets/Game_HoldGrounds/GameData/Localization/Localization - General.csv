@@ -10,6 +10,16 @@ loadGame,Load Game,Carregar jogo,Cargar juego,-
 saveGame,Save Game,Salvar jogo,Guardar partida,-
 newGame,New Game,Novo jogo,Nuevo juego,-
 backToMenu,Back to Menu,Voltar ao menu,Volver al menú,-
+options,Options,Opções,Opciones,-
+language,Language,Idioma,Idioma,-
+graphics,Graphics,Gráficos,Gráficos,-
+audio,Audio,Áudio,Audio,-
+overall,Overall,Geral,Geral,-
+music,Music,Música,Música,-
+soundFx,Sound FX,Sound FX,Sonido FX,-
+low,Low,Baixo,Bajo,-
+medium,Medium,Médio,Medio,-
+high,High,Alto,Alto,-
 selectLevel,Select Level,Selecione a fase,Selecciona el nivel,-
 normalSpeed,Normal speed,Velocidade normal,Velocidad normal,-
 fastSpeed,Fast speed,Velocidade rápida,Rápida velocidad,-
@@ -34,4 +44,14 @@ levelNotComplete,Level not complete!,Nível não concluído!,Nivel no completo!,
 finalScore,Final Score,Pontuação final,Puntuación final,-
 unitsLost,Units lost,Unidades perdidas,Unidades perdidas,-
 unitsDestroyed,Units destroyed,Unidades destruídas,Unidades destruidas,-
+gameBriefing,Game Briefing,Descrição do jogo,Resumen del juego,-
+startingGold,Starting gold,Ouro inicial,Oro inicial,-
+startingMorale,Starting morale,Moral inicial,Moral inicial,-
+msg_cantBuild,"Can't build here, too far from your FLAG!","Não é possível construir aqui, muito longe da sua bandeira!","¡No se puede construir aquí, demasiado lejos de tu BANDERA!",-
+msg_noGold,Not enough gold!,Sem ouro suficiente!,Oro Insuficiente!,-
+msg_trainAllPossible,Training all units possible!,Treinando todas as unidades possíveis!,¡Entrenando todas las unidades posibles!,-
+msg_alreadyTraining,Already training a unit!,Uma unidade já está sendo treinada!,Ya entrenando una unidad!,-
+loading,Loading...,Carregando...,Cargando...,-
+pressAnyKey,Press any key to continue,Aperte qualquer tecla para continuar,Pulse cualquier tecla para continuar,-
+,,,,-
 -,-,-,-,-

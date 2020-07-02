@@ -12,6 +12,7 @@ namespace Game_HoldGrounds.Scripts
     public class EnemyManager : MonoBehaviour
     {
         [Header("====== WAVE SETUP")]
+        [SerializeField] private bool waveEnabled;
         [Tooltip("How long player needs to wait before first wave.")]
         [SerializeField] private float initialWaitTimer = 30;
         [Tooltip("Timer to enemy train units, this will never change.")]
@@ -33,6 +34,16 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] [ReadOnly] private int waveCounter;
         
         // =============================================================================================================
+        private void OnEnable()
+        {
+            GameManager.OnGameStateChange += OnGameState;
+        }
+        // =============================================================================================================
+        private void OnDisable()
+        {
+            GameManager.OnGameStateChange -= OnGameState;
+        }
+        // =============================================================================================================
         private void Start()
         {
             PrepareEnemies();
@@ -41,6 +52,14 @@ namespace Game_HoldGrounds.Scripts
         private void Update()
         {
             EnemyWaveHandler();
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Change this unit behaviour based on game state.
+        /// </summary>
+        private void OnGameState(GameState gState)
+        {
+            waveEnabled = gState == GameState.Playing;
         }
         // =============================================================================================================
         /// <summary>
@@ -79,6 +98,9 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void EnemyWaveHandler()
         {
+            if (!waveEnabled)
+                return;
+            
             //TRAIN UNITS
             currentTrainUnitsTimer -= Time.deltaTime;
             if (currentTrainUnitsTimer <= 0)

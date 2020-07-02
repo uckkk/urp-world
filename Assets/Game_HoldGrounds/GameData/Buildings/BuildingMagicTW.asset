@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60360725c69ee1c4f87535cf68a0cfd6, type: 3}
   m_Name: BuildingMagicTW
   m_EditorClassIdentifier: 
-  propName: Magic Tower
+  propName: magicTower
   picture: {fileID: 21300000, guid: d9d3ec1c83dd4be49840228d9baa2f80, type: 3}
   objectType: 3
   goldCost: 100

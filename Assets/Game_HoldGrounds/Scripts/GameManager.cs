@@ -1,7 +1,9 @@
-﻿using General.Utilities;
+﻿using System.Collections;
+using General.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Game_HoldGrounds.Scripts
@@ -37,6 +39,7 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] [ReadOnly] private PlayerMode playerMode;
         [Tooltip("Player flag, if the enemy gets here, it is game over. It will auto search during start.")]
         [SerializeField] [ReadOnly] private Transform flagBlue;
+        [SerializeField] private string mainMenuScene = "MainMenu";
 
         [Header("====== GAME SETUP")]
         [Tooltip("You can only build on grounds with height less than this.")]
@@ -142,7 +145,7 @@ namespace Game_HoldGrounds.Scripts
         // =============================================================================================================
         private void Start()
         {
-            PrepareMatch();
+            StartCoroutine(PrepareMatch());
         }
         // =============================================================================================================
         private void Update()
@@ -169,32 +172,33 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// Prepares a new match.
         /// </summary>
-        private void PrepareMatch()
+        private IEnumerator PrepareMatch()
         {
+            uiCanvas.SetActive(false);
+            
+            //Get level details
+            levelGold = CoreManager.Instance.GetLevelData.startingGold;
+            levelMorale = CoreManager.Instance.GetLevelData.startingMorale;
+            
+            //Load our level and wait before continuing
+            yield return StartCoroutine(LoadAdditiveScene(CoreManager.Instance.GetLevelData.sceneName));
+            
             //Search the main flags
             var goFlag1 = GameObject.FindGameObjectWithTag(GameTags.FlagBlue);
             var goFlag2 = GameObject.FindGameObjectWithTag(GameTags.FlagRed);
             if (goFlag1 == null || goFlag2 == null)
             {
                 Debug.LogError("ERROR: no flag found, required to play the game!");
-                return;
+                yield break;
             }
             flagBlue = goFlag1.transform;
             // flagRed = goFlag2.transform;
             
-            //Set game status
-            SetGameState(GameState.Playing);
-            playerMode = PlayerMode.InScene;
-            CloseWarningText();
-            AttackMode(false);
+            yield return new WaitForSeconds(1);
             
             //Set starting data
-            uiCanvas.SetActive(true);
-            uiPlayerHud.SetActive(true);
-            uiFinishHud.SetActive(false);
-            uiWinHud.SetActive(false);
-            uiLoseHud.SetActive(false);
-            UpdatePlayerHud();
+            CloseWarningText();
+            AttackMode(false);
             for (var i = 0; i < buildingsAvailable.Length; i++)
             {
                 var uiGo = Instantiate(uiBuildingBtnPrefab, uiButtonsParent);
@@ -210,6 +214,31 @@ namespace Game_HoldGrounds.Scripts
                 buildingsAvailable[i].PrepareBluePrint();
                 buildingsAvailable[i].SetRenderersMaterial(true, bluePrintLocked);
                 buildingsAvailable[i].ToggleBluePrint(false);
+            }
+
+            //Now we can start playing
+            SetGameState(GameState.Playing);
+            playerMode = PlayerMode.InScene;
+            uiCanvas.SetActive(true);
+            uiPlayerHud.SetActive(true);
+            uiFinishHud.SetActive(false);
+            uiWinHud.SetActive(false);
+            uiLoseHud.SetActive(false);
+            UpdatePlayerHud();
+            ChangeGameSpeed(1);
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Load the current sub-scene for the player to spawn.
+        /// </summary>
+        /// <param name="sceneName"></param>
+        /// <returns></returns>
+        private IEnumerator LoadAdditiveScene(string sceneName)
+        {
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
             }
         }
         // =============================================================================================================
@@ -305,13 +334,13 @@ namespace Game_HoldGrounds.Scripts
         public void ChangeGameSpeed(float speedOption)
         {
             if (speedOption == 0)
-                uiGamePaceText.text = "Paused";
+                uiGamePaceText.text = CoreManager.Instance.Language_GetTextById("paused");
             else if (speedOption == 0.5f)
-                uiGamePaceText.text = "Slow Motion";
+                uiGamePaceText.text = CoreManager.Instance.Language_GetTextById("halfSpeed");
             else if (speedOption == 1)
-                uiGamePaceText.text = "Normal Speed";
+                uiGamePaceText.text = CoreManager.Instance.Language_GetTextById("normalSpeed");
             else if (speedOption > 1)
-                uiGamePaceText.text = "Fast Speed";
+                uiGamePaceText.text = CoreManager.Instance.Language_GetTextById("fastSpeed");
             Time.timeScale = speedOption;
         }
         // =============================================================================================================
@@ -334,6 +363,23 @@ namespace Game_HoldGrounds.Scripts
             uiStatsUnitsDestroyed.text = unitsDestroyed.ToString();
         }
         // =============================================================================================================
+        /// <summary>
+        /// Exit game. Duh.
+        /// </summary>
+        public void ExitGame()
+        {
+            Application.Quit();
+        }
+        // =============================================================================================================
+        /// <summary>
+        /// Loads back the main menu.
+        /// </summary>
+        public void BackToMainMenu()
+        {
+            uiCanvas.SetActive(false);
+            CoreManager.Instance.LoadScene(mainMenuScene);
+        }
+        // =============================================================================================================
         #endregion
         
         #region ATK or DEF/ MODE
@@ -346,7 +392,8 @@ namespace Game_HoldGrounds.Scripts
         public void AttackMode(bool toggle)
         {
             isAttacking = toggle;
-            uiMoveModeText.text = toggle ? "ATTACKING!" : "DEFENDING!";
+            uiMoveModeText.text = toggle ? CoreManager.Instance.Language_GetTextById("attacking") :
+                CoreManager.Instance.Language_GetTextById("defending");
             OnAttackModeComplete?.Invoke(toggle);
         }
         // =============================================================================================================
@@ -399,7 +446,7 @@ namespace Game_HoldGrounds.Scripts
                     BuildingCheckTouch(true);
                     if (Input.GetButtonDown("Fire1"))
                     {
-                        ShowWarningText("Can't build here, too far from your FLAG!");
+                        ShowWarningText(CoreManager.Instance.Language_GetTextById("msg_cantBuild"));
                     }
                     return;
                 }
@@ -457,7 +504,7 @@ namespace Game_HoldGrounds.Scripts
                 return;
             if (levelGold < buildingToBuild.propData.goldCost)
             {
-                ShowWarningText("Not enough gold!");
+                ShowWarningText(CoreManager.Instance.Language_GetTextById("msg_noGold"));
                 return;
             }
             var pos = buildingToBuild.bluePrint.position;
@@ -537,10 +584,10 @@ namespace Game_HoldGrounds.Scripts
             uiBuildSelName.text = buildingSelected.GetPropType.propName;
             if (buildingSelected.GetPropType.objectType == ObjectType.BuildingFarm)
             {
-                uiBuildSelUnitName.text = "Gold income";
+                uiBuildSelUnitName.text = CoreManager.Instance.Language_GetTextById("goldIncome");
                 uiBuildSelField1.text = "<color=yellow>+" + buildingSelected.GetPropType.goldGenerate + " / " + 
                                         buildingSelected.GetPropType.timerForGoldIncome + "s";
-                uiBuildSelField2.text = "<color=yellow>Bonus (Trees): +" + buildingSelected.GetGoldBonusPerTree;
+                uiBuildSelField2.text = "<color=yellow>Bonus: +" + buildingSelected.GetGoldBonusPerTree;
                 uiBuildSelUnitImg.sprite = uiGoldIcon;
                 uiBuildSelTrainBtn.interactable = false;
             }
@@ -548,7 +595,8 @@ namespace Game_HoldGrounds.Scripts
                      buildingSelected.GetPropType.objectType == ObjectType.BuildingDefenseTw ||
                      buildingSelected.GetPropType.objectType == ObjectType.BuildingMagicTw)
             {
-                uiBuildSelUnitName.text = unitToBuild.unitName + " (" + unitToBuild.goldCost + " G)";
+                uiBuildSelUnitName.text = CoreManager.Instance.Language_GetCharacterName(unitToBuild.unitName) + 
+                                           " (" + unitToBuild.goldCost + " G)";
                 uiBuildSelField1.text = "<color=red>ATK: " + unitToBuild.damage;
                 uiBuildSelField2.text = "<color=blue>DEF: " + unitToBuild.defense;
                 uiBuildSelUnitImg.sprite = unitToBuild.picture;
@@ -573,7 +621,7 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         public void TrainAllPossibleUnits()
         {
-            ShowWarningText("Training all units possible!");
+            ShowWarningText(CoreManager.Instance.Language_GetTextById("msg_trainAllPossible"));
             var allBuildings = parentForBuildings.GetComponentsInChildren<BuildingBehaviour>();
             for (var i = 0; i < allBuildings.Length; i++)
             {
@@ -592,12 +640,14 @@ namespace Game_HoldGrounds.Scripts
         {
             if (building.GetActionTimer > 0)
             {
-                if (showErrorMsgs) ShowWarningText("Already training a unit!");
+                if (showErrorMsgs)
+                    ShowWarningText(CoreManager.Instance.Language_GetTextById("msg_alreadyTraining"));
                 return;
             }
             if (levelGold < unit.goldCost)
             {
-                if (showErrorMsgs) ShowWarningText("Not enough gold to train!");
+                if (showErrorMsgs)
+                    ShowWarningText(CoreManager.Instance.Language_GetTextById("msg_noGold"));
                 return;
             }
             if (building.GetActionTimer > 0)
@@ -642,13 +692,18 @@ namespace Game_HoldGrounds.Scripts
         /// </summary>
         private void UpdateBuildingUi()
         {
+            if (gameState != GameState.Playing)
+                return;
             if (buildingSelected == null)
                 return;
-            uiBuildSelHealth.text = "Health: " + buildingSelected.GetHealthPoints;
+            uiBuildSelHealth.text = CoreManager.Instance.Language_GetTextById("health") +
+                ": " + buildingSelected.GetHealthPoints;
             if (buildingSelected.GetDamage > 0)
             {
-                uiBuildSelDmg.text = "Damage: +" + buildingSelected.GetDamage;
-                uiBuildSelAtkRate.text = "Atk Rate: 1 / " + buildingSelected.GetAtkRate + "s";
+                uiBuildSelDmg.text = CoreManager.Instance.Language_GetTextById("damage") + 
+                                     ": +" + buildingSelected.GetDamage;
+                uiBuildSelAtkRate.text = CoreManager.Instance.Language_GetTextById("atkRate") + 
+                                         ": 1 / " + buildingSelected.GetAtkRate + "s";
             }
             else
             {

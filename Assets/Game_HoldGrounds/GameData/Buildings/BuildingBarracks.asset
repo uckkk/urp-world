@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60360725c69ee1c4f87535cf68a0cfd6, type: 3}
   m_Name: BuildingBarracks
   m_EditorClassIdentifier: 
-  propName: Barracks
+  propName: barracks
   picture: {fileID: 21300000, guid: 75c40fbc89145aa4aa42a47784ca99b2, type: 3}
   objectType: 1
   goldCost: 40

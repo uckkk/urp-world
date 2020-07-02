@@ -23,6 +23,9 @@ namespace Game_HoldGrounds.Scripts
         [SerializeField] private LayerMask layerToSearchForAtk;
         [Tooltip("What are the game objects this unit will look for defend.")]
         [SerializeField] private LayerMask layerToSearchForDef;
+        [SerializeField] private AudioSource audioDie;
+        [Tooltip("Audio when the unit attacks or cast something.")]
+        [SerializeField] private AudioSource audioAtk;
 
         [Header("====== COMBAT")]
         [Tooltip("Set if melee or not. Melee changes how it stops during the NavMesh move position.")]
@@ -203,6 +206,7 @@ namespace Game_HoldGrounds.Scripts
                     {
                         atkWaitTimer = unitData.atkSpeed;
                         myAnimator.SetTrigger(AnimAttack);
+                        audioAtk.Play();
                         if (!isMelee)
                             startedToShoot = true;
                     }
@@ -368,8 +372,11 @@ namespace Game_HoldGrounds.Scripts
         {
             //Change tag, so this unit will not be a target anymore
             tag = GameTags.Untagged;
-            //Play animation
+            //Play animation and audio
             myAnimator.SetTrigger(AnimIsDead);
+            audioDie.Play();
+            //Make character stop and does not move
+            navMeshAgent.speed = 0;
             //Destroy
             Invoke(nameof(DestroyAfterAnimation), 2);
         }

@@ -43,6 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03194f7afb004fe4bb985bac3046930b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelDataLoaded: {fileID: 0}
+  sceneLoadPrefab: {fileID: 5463785998384520190, guid: 9bc3adae1e09f1646a850146abf8802d,
+    type: 3}
   languageInfo:
     fileToGeneralTexts: {fileID: 4900000, guid: 48bbff65092993e41bb8108384297818,
       type: 3}
@@ -55,3 +58,8 @@ MonoBehaviour:
     - English
     - "Portugu\xEAs"
     - Espanol
+  audioInfo:
+    audioMixer: {fileID: 24100000, guid: 3707819f988d0694c94f3cdd5be76331, type: 2}
+    audioOverallVolume: 1
+    audioMusicVolume: 1
+    audioSfxVolume: 1

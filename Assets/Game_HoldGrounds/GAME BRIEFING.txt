@@ -1,15 +1,13 @@
-=======================================================
-===== HOLD GROUNDS - MULTI-PLATFORM GAME =====
-=======================================================
+===== HOLD GROUNDS
 
-Assets used:
+Assets used (some were just audio, or UI, or meshes):
 - https://assetstore.unity.com/lists/game-hold-grounds-168508
 - https://github.com/UnityTechnologies/UnityTowerDefense_Assets
 
-Github (get the project):
+Download the project on github:
 - https://github.com/Unity-Technologies/urp-world
 
-==================== BRIEFING ====================
+===== BRIEFING
 
 A small (but full) game where you need to reach the enemy flag and not lose morale.
 Your units will have to destroy units and buildings in their way.
@@ -19,9 +17,8 @@ This project can be used for learning and AlexandreK will create talks around it
 Features
 - MonoBehaviour game objects
 - Animation (and Animation Events)
-- Animator (and Animator Override)
-- Bake Lightning
-- Old Input
+- Animator
+- Input system
 - Post Processing
 - Shader Graph
 - URP
@@ -30,12 +27,14 @@ Plus:
 - Original Assets from Unity
 - Terrain Tools
 - Scriptable Objects
-- PlayerPref to save and load scores
-- Project can be available for free
-- Game will be optimized
+- PlayerPref to save and load settings
+- Localization
+- Audio setup
+- Graphics quick setup
+- You can share the project
 - Anyone can come in and create new levels
 
-==================== THE GAME ====================
+===== THE GAME
 Tower Defense (kinda) with base building.
 
 Main goal:
@@ -69,23 +68,24 @@ Gameplay:
 - The game will keep track of wins, loses and score.
 - Many options can be customized at the GameManager prefab and scriptable objects.
 
-==================== FUTURE / PLAN ====================
+===== FUTURE
 
 - Unit upgrades (using Gold or Experience Points).
 - Save and Load of all objects.
+- Optimization.
 - Improve AI, they are dumb now.
 - More Levels.
 - More units.
 - More buildings.
 
-==================== UPDATES ====================
+===== UPDATES
 
 - Always keep up-to-date with latest Unity version (LTS preferable).
 - Maybe add VR support.
 - Add mobile support.
 - Add console support.
 
-=======================================================
+===== 
 Author: Alexandre (Alex) Kikuchi
-Tech Evangelist for Americas
-=======================================================
+Lead Evangelist for the Americas
+===== 

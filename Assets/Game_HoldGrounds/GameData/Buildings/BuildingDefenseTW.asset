@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60360725c69ee1c4f87535cf68a0cfd6, type: 3}
   m_Name: BuildingDefenseTW
   m_EditorClassIdentifier: 
-  propName: Defense Tower
+  propName: defenseTower
   picture: {fileID: 21300000, guid: 3aa0ebf42adc42d4e8479384f46837e8, type: 3}
   objectType: 2
   goldCost: 60

@@ -7,6 +7,7 @@ namespace Game_HoldGrounds.Scripts
     public class PropData : ScriptableObject
     {
         [Header("====== PROP SETUP")]
+        [Tooltip("This name will be used as an ID for localization.")]
         public string propName;
         public Sprite picture;
         public ObjectType objectType;

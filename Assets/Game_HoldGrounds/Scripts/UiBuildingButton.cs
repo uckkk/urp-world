@@ -24,7 +24,7 @@ namespace Game_HoldGrounds.Scripts
         public void SetProp(PropData prop)
         {
             propData = prop;
-            uiPropName.text = propData.propName;
+            uiPropName.text = CoreManager.Instance.Language_GetBuildingName(propData.propName);
             uiGoldCosts.text = propData.goldCost + " G";
             uiPropImage.sprite = propData.picture;
         }
