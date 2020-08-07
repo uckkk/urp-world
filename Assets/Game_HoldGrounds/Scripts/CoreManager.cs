@@ -15,8 +15,8 @@ namespace Game_HoldGrounds.Scripts
     {
         public static CoreManager Instance { get; private set; }
         
-        [Tooltip("The current selected level to play. It will be set by the MainMenu script." +
-                 "Or you can manually set to test.")]
+        [Tooltip("The current selected level to play. It will be set by the MainMenu script. " +
+                 "Or you can manually set for TESTING.")]
         [SerializeField] private LevelData levelDataLoaded;
         public LevelData GetLevelData => levelDataLoaded;
 

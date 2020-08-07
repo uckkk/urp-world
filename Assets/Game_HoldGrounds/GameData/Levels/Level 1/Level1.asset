@@ -15,5 +15,5 @@ MonoBehaviour:
   levelName: The Dark Valley
   sceneName: Level_1
   picture: {fileID: 21300000, guid: 7de58f572b438bd418226cff4bcae211, type: 3}
-  startingGold: 150
+  startingGold: 15000
   startingMorale: 100

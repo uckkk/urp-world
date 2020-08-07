@@ -175,6 +175,12 @@ namespace Game_HoldGrounds.Scripts
         private IEnumerator PrepareMatch()
         {
             uiCanvas.SetActive(false);
+
+            if (CoreManager.Instance.GetLevelData == null)
+            {
+                Debug.LogError("There is no level data! If you are testing, just add one.");
+                yield break;
+            }
             
             //Get level details
             levelGold = CoreManager.Instance.GetLevelData.startingGold;

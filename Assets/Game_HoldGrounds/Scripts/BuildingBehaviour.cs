@@ -81,13 +81,13 @@ namespace Game_HoldGrounds.Scripts
         /// <summary>
         /// We will use this to change the shader properties.
         /// </summary>
-        private Renderer[] myRenderers;
+        [SerializeField] [ReadOnly] private Renderer[] myRenderers;
         
         /// <summary>
         /// Name of the shader property. This one in Shader Graph is boolean, but in code it is interpreted as
         /// float, being either 0 or 1.
         /// </summary>
-        private static readonly int ShaderHighlight = Shader.PropertyToID("_ChangeFx");
+        private static readonly int ShaderHighlight = Shader.PropertyToID("_Highlight");
 
         // =============================================================================================================
         private void Start()

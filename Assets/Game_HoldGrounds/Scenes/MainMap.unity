@@ -194,6 +194,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9020145273258210523, guid: 89f9c322c69aa0541b4dab6647aa8059,
+        type: 3}
+      propertyPath: levelDataLoaded
+      value: 
+      objectReference: {fileID: 11400000, guid: 3c474d63279993542b50a9d9a3d155dc,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89f9c322c69aa0541b4dab6647aa8059, type: 3}
 --- !u!1001 &701480137872106314
@@ -415,6 +421,11 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1619473568}
+    - target: {fileID: 1570354069387343365, guid: d0b041cd0d3da424785fc92473d2ca02,
+        type: 3}
+      propertyPath: levelGold
+      value: 14000
+      objectReference: {fileID: 0}
     - target: {fileID: 1570354069387343386, guid: d0b041cd0d3da424785fc92473d2ca02,
         type: 3}
       propertyPath: m_LocalPosition.x
